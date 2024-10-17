@@ -101,7 +101,7 @@ const Login = () => {
             localStorage.setItem("userId", response.data.userId)
             localStorage.setItem("userName", response.data.userName)
             localStorage.setItem("Mobile", response.data.phone)
-            localStorage.setItem("location", JSON.stringify(response.data.location.locationId))
+            localStorage.setItem("location", JSON.stringify(response.data.location))
 
             if (response.data.role?.roleId === 1) {
               navigate("/AdmMenu");
