@@ -1,0 +1,1 @@
+export const logokcs = process.env.PUBLIC_URL + '/images/logo-TM.png';

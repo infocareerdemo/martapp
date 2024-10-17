@@ -1,0 +1,166 @@
+.btnmenu {
+    background-color: #659DBD;
+    color: white;
+    border: none;
+    box-shadow: none;
+    text-transform: none;
+    min-height: 40px;
+    border-radius: 5px;
+    width: 120px;
+}
+
+.btnmenu:hover {
+    background-color: #507e99;
+    box-shadow: none;
+}
+.msgbtnmenu {
+    background-color: #659DBD;
+    color: white;
+    border: none;
+    box-shadow: none;
+    text-transform: none;
+    min-height: 40px;
+    border-radius: 5px;
+    width: 180px;
+}
+
+.msgbtnmenu:hover {
+    background-color: #507e99;
+    box-shadow: none;
+}
+.viewbtnmenu {
+    background-color: #000000;
+    color: white;
+    border: none;
+    box-shadow: none;
+    text-transform: none;
+    min-height: 33px;
+    border-radius: 5px;
+    width: 70px;
+}
+
+.viewbtnmenu:hover {
+    background-color: #d3e3ed;
+    box-shadow: none;
+}
+
+/* . {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    position: relative;
+} */
+.admaddmenu_label {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16.41px;
+    color: black;
+    margin-bottom: 10px;
+}
+.msginput_box {
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    width: 100%;
+    height: 120px;
+    padding: 6px 12px 11px 12px;
+    color: var(--label-color);
+    outline: none;
+}
+
+
+
+.logininput{
+    min-height: 60px;
+}
+
+@media (min-width: 600px) {
+    .css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar {
+        min-height: 52px;
+        padding-right: 2px;
+    }
+}
+.MuiTablePagination-selectLabel {
+    margin-bottom: 0px;
+}
+.css-13cymwt-control{
+    min-height: 43px !important
+}
+
+
+.task {
+  position: relative;
+  color: #2e2e2f;
+  cursor: move;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+  margin-bottom: 1rem;
+  border: 3px dashed transparent;
+  max-width: 100%;
+  display: flex; /* Add this to align items in a row */
+  flex-direction: row; /* Ensure children are in a row */
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Space items evenly */
+}
+  
+  .task:hover {
+    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
+    border-color: rgba(162, 179, 207, 0.2) !important;
+  }
+  
+  .task p {
+    font-size: 15px;
+    margin: 1.2rem 0;
+  }
+  
+  
+  
+  .stats {
+    position: relative;
+    width: 100%;
+    color: #9fa4aa;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .stats div {
+    margin-right: 1rem;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .stats svg {
+    margin-right: 5px;
+    height: 100%;
+    stroke: #9fa4aa;
+  }
+  
+  .viewer span {
+    height: 30px;
+    width: 30px;
+    background-color: rgb(28, 117, 219);
+    margin-right: -10px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    display: grid;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    padding: 2px;
+  }
+  
+  .viewer span svg {
+    stroke: #fff;
+  }
+  .bondimgPreview {
+    max-width: 100%;
+    max-height: 100px;
+    margin-top: 5px;
+}
+  
+  

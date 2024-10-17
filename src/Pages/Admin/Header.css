@@ -1,0 +1,58 @@
+.header_container {
+    min-height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 30px;
+    background-color: white;
+    position: fixed;
+    z-index: 100;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile_icon_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.profile_icon_container:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    /* transform: scale(1.05); */
+}
+
+.profile_icon {
+    color: rgb(16, 15, 15);
+    z-index: 2;
+    cursor: pointer;
+}
+
+.popover-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.popover-content .option {
+    padding: 15px;
+    /* transition: all 0.3s ease; */
+}
+
+.popover-content .option:hover {
+    font-weight: bold;
+}
+
+.popover-content:hover>.option:not(:hover) {
+    filter: blur(1px);
+    font-weight: 500px;
+}

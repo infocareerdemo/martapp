@@ -1,0 +1,75 @@
+.sidebar_container {
+    position: fixed !important;
+    bottom: 0;
+    top: 60px;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 2;
+}
+.active {
+    border-left: 5px solid rgb(18, 18, 18);
+    background-color: #e3e7ef;
+}
+
+.page_container {
+    width: 100%;
+    display: flex;
+    padding-top: 50px;
+    padding-left: 250px;
+    transition: all 0.2s ease-in;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.mini-sidebar .page_container {
+    padding-left: 80px;
+    transition: all 0.2s ease-out;
+}
+
+.main_content {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    flex-wrap: wrap;
+    padding: 40px 40px 46px 40px;
+    background-color: #f7f8fa;
+}
+
+.main_content, .main_content .collapsed {
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+@media (max-width: 576px) {
+    .main_content {
+        padding: 0px 0px 0px 0px;
+    }
+    .page_container {
+        padding-left: 0px;
+    }
+
+}
+
+.main_content .collapsed {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.myprofile_form_container {
+    padding: 0px 10px 10px 10px;
+}
+.css-dip3t8 {
+    background-color: white !important;
+}
+
+.Summary_card {
+    background-color: #fff;
+    box-shadow: 0 4px 8px #0000001a;
+    padding: 30px;
+    width: 100%;
+    z-index: 2;
+}

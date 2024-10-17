@@ -1,0 +1,31 @@
+.order-placed-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    max-width: 800px;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.order-placed-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.order-placed-message h2 {
+    color: green;
+    margin: 0;
+    font-size: 18px;
+}
+
+.order-placed-message p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.order-placed-message p:first-of-type {
+    font-weight: bold;
+}

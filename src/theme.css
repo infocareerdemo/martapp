@@ -1,0 +1,26 @@
+:root {
+    --primary-color: #659DBD;
+    --tab-color: #2C4AE9;
+    --secondary-color: #7684A0;
+    --button-background: var(--primary-color);
+    --button-text-color: white;
+    --content-background-color: #F7F8FA;
+    --input-text-color: #BDBDBD;
+    --input-border-color: #A2A2A6;
+    --label-color: #667085;
+    --pdf-icon-color: #F47A7A;
+    --ppt-icon-color: #50A0DD;
+    --info-icon-color: #48DE61;
+    --play-icon-color: #E5D433;
+    --volume-icon-color: #984BD5;
+    --question-icon-color: #4A98D3;
+    --copy-icon-color: #DFC05C;
+    --tab-btn-text: #8B9BBA;
+    --disable-btn-color: #b580ff;
+    --sidebar_bg: #EBDCFF;
+    --black: #000000;
+    --red: red;
+    --green: lightgreen;
+    --white: #FFFFFF;
+    --darkgreen: green;
+}
