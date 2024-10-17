@@ -10,7 +10,7 @@ import "./Sidebar.css";
 import "./Admstyle.css";    
 import Alert from "../Components/Alert";
 import { REACT_APP_BASE_URL } from "../Components/Config";
-import * as XLSX from "xlsx"; // Import the xlsx library
+import * as XLSX from "xlsx";
 
 const ImportFile = (props) => {
     const { sideBarCollapse } = useSidebar();
