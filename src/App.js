@@ -41,6 +41,7 @@ import UserLogin from './Pages/User/UserLogin';
 import UserFoodList from './Pages/User/UserFoodList';
 import UserCard from './Pages/User/UserCard';
 import OrderCardSummary from './Pages/OrderCardSummary';
+import ImportFile from './Pages/Admin/ImportFile';
 
 function App() {
   const { appContextValue } = useAppContext();
@@ -99,6 +100,7 @@ function App() {
                 <Route path='/QrcodeDownload' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <QrcodeDownload /> : <AdmLogin />} />
                 {/* <Route path="/AdmupdateMenu" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <AdmupdateMenu /> : <FoodList />} /> */}
                 <Route path='/TodayOrder' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <TodayOrder /> : <AdmLogin />} />
+                <Route path='/ImportFile' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <ImportFile /> : <AdmLogin />} />
                 <Route path='/OrderBasedOnUser' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <OrderBasedOnUser /> : <AdmLogin />} />
                 <Route path='/Report' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <Report /> : <UserInfo />} />
 

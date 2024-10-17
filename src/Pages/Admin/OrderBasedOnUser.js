@@ -224,21 +224,21 @@ const OrderBasedOnUser = () => {
                                     <span>{orderId || "N/A"}</span>
                                 </li>
                                 <li className="list-group-item d-flex justify-content-between align-items-center orderHistory_label">
-    Payment Method:
-    <span style={{ color: paymentStatus === 'PAY_SUCCESS' ? 'green' : 'red' }}>
-        {/* Check if payment was successful */}
-        {paymentStatus === 'PAY_SUCCESS'
-            ? (
-                <>
-                    {payable > 0 && "Razorpay"}
-                    {codAmount > 0 && "Cash On Delivery (COD)"}
-                    {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
-                </>
-            )
-            : 'FAILED'
-        }
-    </span>
-</li>
+                                    Payment Method:
+                                    <span style={{ color: paymentStatus === 'PAY_SUCCESS' ? 'green' : 'red' }}>
+                                        {/* Check if payment was successful */}
+                                        {paymentStatus === 'PAY_SUCCESS'
+                                            ? (
+                                                <>
+                                                    {payable > 0 && "Online"}
+                                                    {codAmount > 0 && "Cash On Delivery (COD)"}
+                                                    {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
+                                                </>
+                                            )
+                                            : 'FAILED'
+                                        }
+                                    </span>
+                                </li>
 
 
                                 <li className="list-group-item d-flex justify-content-between align-items-center orderHistory_label">

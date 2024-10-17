@@ -4,6 +4,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import './OrderPlaced.css';
 import Header from '../Admin/Header';
 import { useNavigate } from 'react-router-dom';
+import { useFoodContext } from "./FoodContext";
 
 const OrderPlaced = () => {
 
@@ -12,15 +13,31 @@ const OrderPlaced = () => {
     const [userId] = useState(localStorage.getItem("userId"))
     const navigate = useNavigate();
     const { paymentId } = location.state || {};  // Retrieve paymentId from state
+    const { setFoodData } = useFoodContext()
 
     const handleMyOrder = () => {
         navigate("/MyOrders");
     }
     const handleBack = () => {
+        setFoodData([])
         navigate("/FoodList");
     }
 
+    useEffect(() => {
+        const handleBrowserBack = () => {
+            if (location.pathname !== "/FoodList") {  // Customize behavior only if not already on FoodList
+                handleBack();
+            }
+        };
 
+        window.history.pushState(null, null, window.location.href); // This prevents going back directly to a previous page
+        window.addEventListener("popstate", handleBrowserBack); // Listen for back navigation
+
+        // Clean up the listener on component unmount
+        return () => {
+            window.removeEventListener("popstate", handleBrowserBack);
+        };
+    }, [location.pathname]);
 
     useEffect(() => {
         console.log('*******Payment ID:', paymentId);
@@ -166,7 +183,7 @@ const OrderPlaced = () => {
                                     {orderData?.orders?.paymentStatus === 'PAY_SUCCESS'
                                         ? (
                                             <>
-                                                {orderData?.orders?.razorpayAmount > 0 && "Razorpay"}
+                                                {orderData?.orders?.razorpayAmount > 0 && "Online"}
                                                 {orderData?.orders?.cashAmount > 0 && "Cash On Delivery (COD)"}
                                                 {orderData?.orders?.razorpayAmount === 0 && orderData?.orders?.cashAmount === 0 && orderData?.orders?.walletAmount > 0 && "Wallet"}
 

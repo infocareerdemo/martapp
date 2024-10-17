@@ -212,7 +212,7 @@ const OrderHistory = () => {
                                                 {orderDetails?.cashAmount > 0 && "Cash On Delivery (COD)"} */}
 
                                                 {/* <> */}
-                                                {orderDetails?.razorpayAmount > 0 && "Razorpay"}
+                                                {orderDetails?.razorpayAmount > 0 && "Online"}
                                                 {orderDetails?.cashAmount > 0 && "Cash On Delivery (COD)"}
                                                 {orderDetails?.razorpayAmount === 0 && orderDetails?.cashAmount === 0 && orderDetails?.walletAmount > 0 && "Wallet"}
 

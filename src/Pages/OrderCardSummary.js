@@ -272,7 +272,52 @@ const OrderCardSummary = () => {
                 console.log('Error fetching menu:', error);
             });
     };
+    // const saveWallet = () => {
+    //     const productIds = foodList.map(food => food.products?.productId);
+    //     const url = `/payment/payAmount?userId=${userId}&orderId=${orderId}`;
+    //     // const url = `/payment/createOrder?id=${userId}&oid=${orderId}&razorpayAmount=${amountToPay}`;
+    //     const data = {
+    //         // "userId": userId,
+    //         // "orderId": orderId,
+    //         "walletAmount": walletRedeemedAmount,
+    //         // "productIds": productIds
+    //     };
+    //     if (paymentMethod === "online") {
+    //         data.razorpayAmount = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;
+    //     }
+    //     if (paymentMethod === "offline") {
+    //         data.cashAmount = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;
+    //     }
+    //     apiServiceCall('POST', url, data, headers)
+    //         // .then((response) => {
+    //         //     if (response && response.data && response.data.success === true) {
+    //         //         const amountToPay = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;                 
+    //         //         console.log("Amount to Pay:", amountToPay);                 
+    //         //         handleRazorpayPayment(id, orderList?.id, onSuccess, onFailure, amountToPay);
+    //         //     } else {
+    //         //         console.error("Unexpected response:", response);
+    //         //     }
+    //         // })
+    //         .then((response) => {
+    //             if (response.data !== '') {
+    //                 const amountToPay = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;
 
+    //                 if (remainingAmount === 0 || remainingAmount === "0" || paymentMethod === "offline") {
+    //                     OrderPlacedZeroAmount();
+    //                     // alert("Not opening Razorpay as the remaining amount is zero.");
+    //                 } else {
+    //                     console.log("Amount to Pay:", amountToPay);
+    //                     handleRazorpayPayment(id, orderList?.id, onSuccess, onFailure, amountToPay);
+    //                 }
+    //             } else {
+    //                 console.error("Unexpected response:", response);
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error during API call:", error);
+    //             // Handle error (show error message to user, etc.)
+    //         });
+    // };
     return (
         <div>
             <Header

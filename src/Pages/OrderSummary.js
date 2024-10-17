@@ -7,7 +7,7 @@ import useRazorpayPayment from './Components/RazorpayPayment';
 import Alert from './Components/Alert';
 import Header from './Admin/Header';
 
-const OrderInfo = ({ title, quantity, totalItemPrice, gst, description, imgSrc, productId }) => (
+const OrderInfo = ({ title, quantity, totalItemPrice, gst,productAmount, description, imgSrc, productId, onAdd, onSubtract, }) => (
 
     <div className="OrderSummary_card" style={{ marginBottom: "10px" }}>
         <div className="row" >
@@ -16,15 +16,22 @@ const OrderInfo = ({ title, quantity, totalItemPrice, gst, description, imgSrc, 
             </div>
             <div className="col-8 col-md-7 col-lg-9">
                 <div className='row'>
-                    <h5 className="card-title">{title}</h5>
+                    <h5 className="card-title">{title} ₹ {productAmount}</h5>
                     <div style={{ display: 'flex', justifyContent: "space-between" }}>
-                        <p className="card-text"><small className="text-muted">Qty: {quantity}</small></p>
+                        {/* <p className="card-text"><small className="text-muted">Qty: {quantity}</small></p> */}
+                        <div className="quantity-controls">
+                            <button className="btn px-3" onClick={onSubtract}>-</button>
+                            <span className="px-2">{quantity}</span>
+                            <button className="btn px-3" onClick={onAdd}>+</button>
+                        </div>
                         <p className="card-text"><small className="text-muted">₹{totalItemPrice}</small></p>
+                        {/* <p className="card-text"><small className="text-muted">₹{totalItemPrice}</small></p> */}
                         {/* <p className="card-text"><small className="text-muted">{productId}</small></p> */}
 
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
@@ -34,7 +41,7 @@ const OrderInfo = ({ title, quantity, totalItemPrice, gst, description, imgSrc, 
 const OrderSummary = () => {
     const { state: userDetails } = useLocation();
 
-    const { foodData } = useFoodContext();
+    const { foodData, addToCart, removeFromCart, setFoodData } = useFoodContext();
     const { apiServiceCall } = useAppContext();
 
     const navigate = useNavigate();
@@ -115,18 +122,32 @@ const OrderSummary = () => {
         console.log("wallet")
     }, []);
 
+    // useEffect(() => {
+    //     console.log(userDetails,foodData, "userDetails");
+    //     const data = foodData.filter(food => food.quantity > 0);
+    //     if (data.length === 0) {
+    //         navigate("/");
+    //     } else if
+    //         // (!saveListCalled.current) {
+    //         // saveListCalled.current = true;
+    //         SaveList(data);
+    //     }
+    // , [foodData]);
     useEffect(() => {
-        console.log(userDetails, "userDetails");
+        console.log(userDetails, foodData, "userDetails");
+    
+        // Filter food items with quantity > 0
         const data = foodData.filter(food => food.quantity > 0);
+    
+        // Navigate away if no valid food data is found
         if (data.length === 0) {
-            navigate("/");
-        } else if
-            (!saveListCalled.current) {
-            saveListCalled.current = true;
+            navigate("/FoodList");
+        } else {
+            // Call SaveList with the filtered data
             SaveList(data);
         }
-    }, []);
-
+    }, [foodData]); // Effect runs when foodData changes
+    
     const headers = {
         Authorization: `Bearer ${token}`,
     };
@@ -167,52 +188,7 @@ const OrderSummary = () => {
                 // Handle error (show error message to user, etc.)
             });
     };
-    // const saveWallet = () => {
-    //     const productIds = foodList.map(food => food.products?.productId);
-    //     const url = `/payment/payAmount?userId=${userId}&orderId=${orderId}`;
-    //     // const url = `/payment/createOrder?id=${userId}&oid=${orderId}&razorpayAmount=${amountToPay}`;
-    //     const data = {
-    //         // "userId": userId,
-    //         // "orderId": orderId,
-    //         "walletAmount": walletRedeemedAmount,
-    //         // "productIds": productIds
-    //     };
-    //     if (paymentMethod === "online") {
-    //         data.razorpayAmount = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;
-    //     }
-    //     if (paymentMethod === "offline") {
-    //         data.cashAmount = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;
-    //     }
-    //     apiServiceCall('POST', url, data, headers)
-    //         // .then((response) => {
-    //         //     if (response && response.data && response.data.success === true) {
-    //         //         const amountToPay = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;                 
-    //         //         console.log("Amount to Pay:", amountToPay);                 
-    //         //         handleRazorpayPayment(id, orderList?.id, onSuccess, onFailure, amountToPay);
-    //         //     } else {
-    //         //         console.error("Unexpected response:", response);
-    //         //     }
-    //         // })
-    //         .then((response) => {
-    //             if (response.data !== '') {
-    //                 const amountToPay = remainingAmount > 0 ? remainingAmount : orderList?.totalAmount;
 
-    //                 if (remainingAmount === 0 || remainingAmount === "0" || paymentMethod === "offline") {
-    //                     OrderPlacedZeroAmount();
-    //                     // alert("Not opening Razorpay as the remaining amount is zero.");
-    //                 } else {
-    //                     console.log("Amount to Pay:", amountToPay);
-    //                     handleRazorpayPayment(id, orderList?.id, onSuccess, onFailure, amountToPay);
-    //                 }
-    //             } else {
-    //                 console.error("Unexpected response:", response);
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error during API call:", error);
-    //             // Handle error (show error message to user, etc.)
-    //         });
-    // };
     const onSuccess = (response) => {
         console.log("Payment success response:", response);
         navigate('/OrderPlaced', { state: { orderData: response } });
@@ -236,9 +212,7 @@ const OrderSummary = () => {
         const foodData = data.map(item => ({
             productId: item.productId,
             quantity: item.quantity
-        }
-
-        ));
+        }));
 
         apiServiceCall('POST', url, foodData, headers)
             .then((response) => {
@@ -334,9 +308,12 @@ const OrderSummary = () => {
                                 description={food.products?.productDescription}
                                 quantity={food.quantity}
                                 totalItemPrice={food.totalPrice}
+                                productAmount={food.products?.productPrice}
                                 gst={food.taxAmount}
                                 productId={food.products?.productId}
                                 imgSrc={base64ToImageUrl(food.products?.productImage)}
+                                onAdd={() => addToCart(food.products?.productId)}
+                                onSubtract={() => removeFromCart(food.products?.productId)}
                             />
                         ))}
 
@@ -363,6 +340,21 @@ const OrderSummary = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Payment Method</h5>
                                 <ul className="list-group list-group-flush">
+                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <SlWallet style={{ marginBottom: "5px" }}></SlWallet>
+                                            <label style={{ marginLeft: "5px" }}>Wallet</label>
+                                        </div>
+                                        <label className='chkbox'>
+                                            <input
+                                                type="checkbox"
+                                                value="online"
+                                                checked={walletMethod}
+                                                onChange={handleWallet}
+                                            />
+                                            ₹ {walletAmount}
+                                        </label>
+                                    </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
                                         <label className='chkbox'>
                                             <input
@@ -385,21 +377,7 @@ const OrderSummary = () => {
                                     </li>
                                 </ul>
                                 <ul className="list-group list-group-flush">
-                                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <SlWallet style={{ marginBottom: "5px" }}></SlWallet>
-                                            <label style={{ marginLeft: "5px" }}>Wallet</label>
-                                        </div>
-                                        <label className='chkbox'>
-                                            <input
-                                                type="checkbox"
-                                                value="online"
-                                                checked={walletMethod}
-                                                onChange={handleWallet}
-                                            />
-                                            ₹ {walletAmount}
-                                        </label>
-                                    </li>
+                                  
                                     {walletMethod && (
                                         <li className="list-group-item d-flex justify-content-between align-items-center">
                                             <div>

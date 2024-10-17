@@ -10,6 +10,7 @@ import { IoFastFoodOutline } from "react-icons/io5";
 import { IoDownloadOutline } from "react-icons/io5";
 import { BiSolidDashboard } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
+import { AiOutlineImport } from "react-icons/ai";
 
 const Admsidebar = () => {
     var { sideBarCollapse, sideBarToggle, handleSidebarToggle, handleBackdropClick } = useSidebar();
@@ -74,6 +75,15 @@ const Admsidebar = () => {
                 </MenuItem>
 
             </Menu> */}
+             <Menu iconShape="square" className="ClsMenu">
+                <MenuItem
+                    onClick={() => navigate('/ImportFile')}
+                    icon={<AiOutlineImport id="sidebaruser" color="brown"/>}
+                    className={['/ImportFile'].includes(location.pathname) ? 'active' : ''}
+                >
+                    Import File
+                </MenuItem>
+            </Menu>
             <Menu iconShape="square" className="ClsMenu">
                 <MenuItem
                     onClick={() => navigate('/Report')}
@@ -82,7 +92,6 @@ const Admsidebar = () => {
                 >
                     Report
                 </MenuItem>
-
             </Menu>
             {/* <Menu iconShape="square" className="ClsMenu">
                 <MenuItem

@@ -114,7 +114,7 @@ const FoodList = () => {
             },
             "quantity": 1,
             "totalPrice": food.productPrice,
-            "productActive":true
+            "productActive": true
         };
         apiServiceCall('POST', url, data, headers)
             .then((response) => {
@@ -152,7 +152,11 @@ const FoodList = () => {
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
                 console.log(response, "menu")
-                const data = response.data.map((item) => ({ ...item, quantity: 0 }));
+                const data = (foodData.length ? foodData : response.data).map((item) => ({
+                    ...item,
+                    quantity: item.quantity ?? 0 // Preserve existing quantity if it exists, otherwise set to 0
+                }));
+                
                 setFoodData(data);
             })
             .catch((error) => {
@@ -209,8 +213,8 @@ const FoodList = () => {
                                     price={food.productPrice}
                                     quantity={food.quantity}
                                     totalItemPrice={food.productPrice * food.quantity}
-                                    onAdd={() => addToCart(index)}
-                                    onSubtract={() => removeFromCart(index)}
+                                    onAdd={() => addToCart(food.productId)}
+                                    onSubtract={() => removeFromCart(food.productId)}
                                     handleAddToCard={() => handleAddToCard(food)}
                                 />
                             ))}

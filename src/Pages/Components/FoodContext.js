@@ -19,7 +19,7 @@ export const FoodProvider = ({ children }) => {
         apiServiceCall(method, url, data, null)
             .then((response) => {
                 console.log(response);
-              
+
             })
             .catch((error) => {
                 console.log("Error searching user:", error);
@@ -27,20 +27,29 @@ export const FoodProvider = ({ children }) => {
     }
 
     const [foodData, setFoodData] = useState([]);
-    
-    const addToCart = (index) => {
-        const updatedFoodData = [...foodData];
-        updatedFoodData[index].quantity += 1;
+
+    // Function to add a product to the cart based on productId
+    const addToCart = (productId) => {
+        const updatedFoodData = foodData.map(food => {
+            if (food.productId === productId) {
+                return { ...food, quantity: food.quantity + 1 };
+            }
+            return food;
+        });
         setFoodData(updatedFoodData);
     };
 
-    const removeFromCart = (index) => {
-        const updatedFoodData = [...foodData];
-        if (updatedFoodData[index].quantity > 0) {
-            updatedFoodData[index].quantity -= 1;
-            setFoodData(updatedFoodData);
-        }
+    // Function to remove a product from the cart based on productId
+    const removeFromCart = (productId) => {
+        const updatedFoodData = foodData.map(food => {
+            if (food.productId === productId && food.quantity > 0) {
+                return { ...food, quantity: food.quantity - 1 };
+            }
+            return food;
+        });
+        setFoodData(updatedFoodData);
     };
+
 
     return (
         <FoodContext.Provider value={{ foodData, setFoodData, addToCart, removeFromCart }}>
