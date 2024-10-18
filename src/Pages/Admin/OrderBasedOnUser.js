@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useAppContext } from '../Components/AppProvider';
 import "./Sidebar.css";
 import "./Admstyle.css";
+import { toast } from "react-toastify";
 
 const OrderBasedOnUser = () => {
     const { sideBarCollapse } = useSidebar();
@@ -17,7 +18,8 @@ const OrderBasedOnUser = () => {
     const [codAmount, setCodeAmount] = useState("");
     const [orderdataandtime, setOrderDateandtime] = useState("")
     const [paymentStatus, setpaymentStatus] = useState("")
-
+    const [codflag, setcodflag] = useState("")
+    const [delflag, setDelflag] = useState("")
 
     const location = useLocation();
     const id = location.state.id;
@@ -40,7 +42,7 @@ const OrderBasedOnUser = () => {
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
                 console.log(response, "User Details");
-                setOrderData(response.data.orderDetails);
+                setOrderData(response.data?.orderDetails);
                 setPayable(response.data.orders.razorpayAmount);
                 settotalAmount(response.data.orders.totalAmount);
                 setOrderId(response.data.orders.orderId);
@@ -48,6 +50,10 @@ const OrderBasedOnUser = () => {
                 setwalletAmount(response.data.orders.walletAmount);
                 setCodeAmount(response.data.orders.cashAmount);
                 setpaymentStatus(response.data.orders.paymentStatus);
+
+                setcodflag(response.data.orders.cashOrderStatus)
+                setDelflag(response.data.orders.deliveredStatus)
+                console.log(response.data.orders.deliveredStatus)
             });
     };
     const base64ToImageUrl = (base64String) => {
@@ -87,6 +93,47 @@ const OrderBasedOnUser = () => {
 
         const formattedDate = `${dayOfWeek}, ${month} ${dayOfMonth}, ${year} ${formattedHours}:${minutes} ${ampm}`;
         return formattedDate;
+    };
+    const codBtn = () => {
+        const url = `/order/updateOrderStatus`;
+        const data = {
+            orderId: orderId,
+            cashOrderStatus: true,
+        };
+        apiServiceCall('POST', url, data, headers)
+            .then((response) => {
+                if (response.status === 200) {
+                    ViewUsers();
+                    toast.success('COD Approved', {
+                        position: "bottom-center",
+                        autoClose: 2000, // Auto close after 3 seconds
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "colored",
+                    });
+                }
+            })
+            .catch((error) => {
+            });
+    };
+    const DeliveredBtn = () => {
+        const url = `/order/updateDeliveredStatus`;
+        const data = {
+            orderId: orderId,
+            deliveredStatus: true,
+        };
+        apiServiceCall('POST', url, data, headers)
+            .then((response) => {
+                console.log(response, "SaveList response");
+                if (response.status === 200) {
+                    ViewUsers();
+                }
+            })
+            .catch((error) => {
+            });
     };
     return (
         <div>
@@ -147,7 +194,7 @@ const OrderBasedOnUser = () => {
 
                         <div>
                             <ul className="list-group list-group-flush">
-                                <h5 className="card-title" style={{ fontWeight: "bold", color: "#ff5722" }}>Your Order</h5>
+                                {/* <h5 className="card-title" style={{ fontWeight: "bold", color: "#ff5722" }}>Your Order</h5> */}
                                 {orderData.map((orderDetail, index) => (
                                     <li
                                         key={index}
@@ -199,12 +246,30 @@ const OrderBasedOnUser = () => {
                                     <li className="list-group-item d-flex justify-content-between align-items-center orderHistory_label">
                                         {payable === 0 ? (
                                             <>
-                                                Amount:
+                                               {paymentStatus === 'PAY_SUCCESS'
+                                            ? (
+                                                <>
+                                                    {payable > 0 && "Online"}
+                                                    {codAmount > 0 && "Cash On Delivery (COD)"}
+                                                    {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
+                                                </>
+                                            )
+                                            : ''
+                                        }
                                                 <span> ₹ {codAmount || 0}</span>
                                             </>
                                         ) : (
                                             <>
-                                                Amount:
+                                                {paymentStatus === 'PAY_SUCCESS'
+                                            ? (
+                                                <>
+                                                    {payable > 0 && "Online"}
+                                                    {codAmount > 0 && "Cash On Delivery (COD)"}
+                                                    {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
+                                                </>
+                                            )
+                                            : ''
+                                        }
                                                 <span> ₹ {payable || 0}</span>
                                             </>
                                         )}
@@ -247,9 +312,156 @@ const OrderBasedOnUser = () => {
                                 </li>
                             </ul>
                         </div>
+                        {/* COD */}
+                        {codAmount > 0 &&
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px" }}>
+                                {codflag === true ? (
+                                    <div className="col-lg-3 col-md-12">
+                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                            <span className='required' style={{ color: "red" }}></span>
+                                        </label>
+                                        <button
+                                            className='input_box'
+                                            style={{
+                                                backgroundColor: "green", // Change to green if codflag is true
+                                                color: "white",
+                                                cursor: "default",
+                                                display: "block",
+                                                width: "100%",
+                                                borderRadius: "8px",
+                                            }}
+                                            disabled
+                                        >
+                                            COD Collected
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="col-lg-3 col-md-12">
+                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                            <span className='required' style={{ color: "red" }}></span>
+                                        </label>
+                                        <button
+                                            className='input_box'
+                                            style={{
+                                                backgroundColor: "red",
+                                                color: "white",
+                                                cursor: "pointer",
+                                                display: "block",
+                                                width: "100%",
+                                                borderRadius: "8px",
+                                            }}
+                                            onClick={codBtn}
+                                        >
+                                            COD Collected
+                                        </button>
+                                    </div>
+                                )}
+
+                                {delflag === true ? (
+                                    <div className="col-lg-3 col-md-12">
+                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                            <span className='required' style={{ color: "red" }}></span>
+                                        </label>
+                                        <button
+                                            className='input_box'
+                                            style={{
+                                                backgroundColor: "green",
+                                                color: "white",
+                                                cursor: "default",
+                                                display: "block",
+                                                width: "100%",
+                                                borderRadius: "8px",
+                                            }}
+                                            disabled
+                                        >
+                                            Delivered
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="col-lg-3 col-md-12">
+                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                            <span className='required' style={{ color: "red" }}></span>
+                                        </label>
+                                        <button
+                                            className='input_box'
+                                            disabled={codflag === false}
+                                            style={{
+                                                backgroundColor: "#AFB0B1",
+                                                color: "white",
+                                                cursor: codflag === false ? "not-allowed" : "pointer",
+                                                display: "block",
+                                                width: "100%",
+                                                borderRadius: "8px",
+                                                border: "none"
+                                            }}
+                                            onClick={codflag === false ? null : DeliveredBtn}
+                                        >
+                                            Yet to Delivered
+                                        </button>
+
+                                    </div>
+                                )}
+
+
+                            </div>
+                        }
+                        {(payable > 0 || (payable === 0 && codAmount === 0 && walletAmount > 0)) && (
+                            <>
+                                {delflag ? (
+                                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px" }}>
+                                        <div className="col-lg-3 col-md-12">
+                                            <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                                <span className='required' style={{ color: "red" }}></span>
+                                            </label>
+                                            <button
+                                                className='input_box'
+                                                style={{
+                                                    backgroundColor: "green",
+                                                    color: "white",
+                                                    cursor: "default",
+                                                    display: "block",
+                                                    width: "100%",
+                                                    borderRadius: "8px",
+                                                }}
+                                                disabled
+                                            >
+                                                Delivered
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px" }}>
+                                    <div className="col-lg-3 col-md-12">
+                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                            <span className='required' style={{ color: "red" }}></span>
+                                        </label>
+                                        <button
+                                            className='input_box'
+                                            // disabled={!codflag}
+                                            style={{
+                                                backgroundColor: "#AFB0B1",
+                                                color: "white",
+                                                cursor: "pointer",
+                                                display: "block",
+                                                width: "100%",
+                                                borderRadius: "8px",
+                                                border: "none",
+                                            }}
+                                            onClick={DeliveredBtn}
+                                        >
+                                            Yet to Delivered
+                                        </button>
+                                    </div>
+                                    </div>
+                                )}
+                            </>
+                        )}
+
                     </div>
                 </div>
+
             </div>
+
         </div>
     );
 };

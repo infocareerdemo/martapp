@@ -352,7 +352,7 @@ const OrderSummary = () => {
                                                 checked={walletMethod}
                                                 onChange={handleWallet}
                                             />
-                                            ₹ {walletAmount}
+                                            ₹ {walletAmount || 0} 
                                         </label>
                                     </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">

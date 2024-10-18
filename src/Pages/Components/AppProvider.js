@@ -37,29 +37,30 @@ export const AppProvider = ({ children }) => {
   const handleApiError = (error) => {
     console.log(error, "i");
   
-    // if (error.response?.status === 403) {
-    //   const errorCode = error.response?.data?.errorCode;
-    //   if (errorCode === 1001) {
-    //     const errorMessage = error.response?.data?.message;
-    //     setUserAlert(true);
-    //     setAlertClose(() => () => {
-    //       setUserAlert(false);
-    //     });
-    //     setAlertType("error");
-    //     setAlertMsg(errorMessage);
-    //   } else {
-    //     setUserAlert(true);
-    //     setAlertTittle("Info");
-    //     setAlertMsg("Your current session has been expired. Please log in again.");
-    //     setAlertType("info");
-    //     setAlertClose(() => () => {
-    //       window.location.href = "/";
-    //       localStorage.clear();
-    //     });
-    //   }
-    // }
+    if (error.response?.status === 403) {
+      const errorCode = error.response?.data?.errorCode;
+      if (errorCode === 1001) {
+        const errorMessage = error.response?.data?.message;
+        setUserAlert(true);
+        setAlertClose(() => () => {
+          setUserAlert(false);
+        });
+        setAlertType("error");
+        setAlertMsg(errorMessage);
+      } 
+      // else {
+      //   setUserAlert(true);
+      //   setAlertTittle("Info");
+      //   setAlertMsg("Your current session has been expired. Please log in again.");
+      //   setAlertType("info");
+      //   setAlertClose(() => () => {
+      //     window.location.href = "/";
+      //     localStorage.clear();
+      //   });
+      // }
+    }
   
-    // throw error;
+    throw error;
   };
   
   // const handleApiError = (error) => {

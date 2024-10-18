@@ -59,15 +59,14 @@ const UserLogin = () => {
 
     const handleGenerateOtp = (event) => {
         event.preventDefault();
-
         // Validate before submitting
         if (!validateForm()) {
             return;
         }
 
-        const url = "/user/verifyUsernameAndGenerateOtp";
+        const url = "/user/verifyEmployeeCodeAndGenerateOtp";
         let data = {
-            "username": empCode,
+            "employeeCode": empCode,
         };
         apiServiceCall('POST', url, data)
             .then((response) => {
@@ -94,7 +93,7 @@ const UserLogin = () => {
 
         const url = "/user/login";
         let data = {
-            "username": empCode,
+            "employeeCode": empCode,
             "phoneOTP": phoneOtp,
         };
         apiServiceCall('POST', url, data)
@@ -104,7 +103,7 @@ const UserLogin = () => {
                     localStorage.setItem("roleId", response.data.role.roleId)
                     localStorage.setItem("userId", response.data.userId)
                     localStorage.setItem("location", response.data.location.locationId)
-                    localStorage.setItem("userName", response.data.username)
+                    localStorage.setItem("userName", response.data.employeeCode)
                     // localStorage.setItem("Mobile", response.data.location.locationId)
                     navigate('/FoodList');
 

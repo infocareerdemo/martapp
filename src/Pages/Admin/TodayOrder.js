@@ -54,46 +54,30 @@ const TodayOrder = () => {
             }
         },
         {
-            title: 'Mode of payment ',
+            title: 'Mode of payment',
             render: rowData => {
                 const { cashAmount, razorpayAmount, walletAmount } = rowData;
-    
-                // Determine the amount display based on the provided logic
+        
+                // Determine the amount display and corresponding color based on the provided logic
+                let paymentMode;
+                let color;
+        
                 if (cashAmount > 0) {
-                    return `COD`;
+                    paymentMode = 'COD';
+                    color = 'red'; // Color for COD
                 } else if (razorpayAmount > 0) {
-                    return `Razorpay`;
+                    paymentMode = 'Online';
+                    color = 'green'; // Color for Online payment
                 } else {
-                    return `Wallet`;
+                    paymentMode = 'Wallet';
+                    color = 'green'; // Color for Wallet
                 }
+        
+                return (
+                    <span style={{ color }}>{paymentMode}</span> // Display payment mode with color
+                );
             }
-        },
-        // {
-        //     title: 'Shipped',
-        //     field: 'shipped',
-        //     render: rowData => (
-        //         <input
-        //             type="checkbox"
-        //             checked={rowData.shippedFlag ? rowData.shippedFlag : rowData.shipped}
-        //             disabled={rowData.shipped}
-        //             onChange={() => handleShippedChange(rowData.orderId, rowData.shippedFlag)}
-        //         />
-        //     )
-        // },
-        // {
-        //     title: 'Delivered',
-        //     field: 'delivered',
-        //     render: rowData => (
-        //         <input
-        //             type="checkbox"
-        //             checked={rowData.deliveredFlag ? rowData.deliveredFlag : rowData.delivered}
-        //             disabled={rowData.delivered || !rowData.shipped}
-        //             onChange={() => handleDeliveredChange(rowData.orderId, rowData.deliveredFlag)}
-
-        //         />
-
-        //     )
-        // },
+        },        
         {
             title: 'Action',
             field: 'action',
@@ -199,108 +183,6 @@ const TodayOrder = () => {
             });
     };
 
-    const handleShippedChange = (orderId, currentShippedStatus) => {
-        const order = userOrderData.find(order => order.orderId === orderId);
-        if (order) {
-            const updatedStatus = !order.shippedFlag;
-            console.log("******** update Status from event:", updatedStatus);
-            setUserOrderData(prevData =>
-                prevData.map(row =>
-                    row.orderId === orderId
-                        ? { ...row, shippedFlag: updatedStatus }
-                        : row
-                )
-            );
-        } else {
-            console.error("Order ID not found:", orderId);
-        }
-    };
-
-
-    const handleDeliveredChange = (orderId, currentDeliveredStatus) => {
-        const order = userOrderData.find(order => order.orderId === orderId);
-        if (order) {
-            const updatedStatus = !order.deliveredFlag;
-            setUserOrderData(prevData =>
-                prevData.map(row =>
-                    row.orderId === orderId
-                        ? { ...row, deliveredFlag: updatedStatus }
-                        : row
-                )
-            );
-        } else {
-            console.error("Order ID not found:", orderId);
-        }
-    };
-    const updateShippedStatus = () => {
-        const selectedOrders = userOrderData.filter(order => order.shippedFlag && !order.shipped);
-        const orderIds = selectedOrders.map(order => order.orderId);
-    
-        if (orderIds.length === 0) {
-            setAlertType("error"); // Set alert type to "error"
-            setAlertMsg("No orders selected for update."); // Set the message
-            setUserAlert(true); // Show the alert
-            return; // Stop further execution
-        }
-    
-        // Prepare the payload with the selected order IDs and shipped status
-        const payload = {
-            orderIds: orderIds,
-            shipped: selectedOrders.some(order => order.shippedFlag),
-        };
-    
-        const url = `/order/updateShippedStatus`;
-    
-        // Call the API to update the shipped status
-        apiServiceCall('POST', url, payload, headers)
-            .then((response) => {
-                console.log("Update successful:", response.data);
-                setAlertType("info"); // Success alert
-                setAlertMsg("Shipped Status Updated!!");
-                setUserAlert(true);
-    
-                // Optionally reload the product list or take any other action
-                GetallProducts(orderIds);
-            })
-            .catch((error) => {
-                // Handle error
-                setAlertType("error"); // Error alert
-                setAlertMsg("Failed to update order statuses");
-                setUserAlert(true);
-                console.error("Error updating order statuses:", error);
-            });
-    };
-    
-    
-
-    const updateDeliveredStatus = () => {
-        const selectedOrders = userOrderData.filter(order => order.deliveredFlag && !order.delivered);
-        const orderIds = selectedOrders.map(order => order.orderId);
-        if (orderIds.length === 0) {
-            setAlertType("error");
-            setAlertMsg("No orders selected for update.");
-            setUserAlert(true);
-            return;
-        }
-        const payload = {
-            orderIds: orderIds,
-            delivered: selectedOrders.some(order => order.deliveredFlag),
-        };
-        const url = `/order/updateDeliveredStatus`;
-        apiServiceCall('POST', url, payload, headers)
-            .then((response) => {
-                setAlertType("info");
-                setAlertMsg("Delivered Status updated!!");
-                setUserAlert(true);
-                GetallProducts(orderIds);
-            })
-            .catch((error) => {
-                console.error("Error updating order statuses:", error);
-                alert("Failed to update order statuses.");
-            });
-
-    };
-
     return (
         <div>
             <Header />
@@ -310,7 +192,7 @@ const TodayOrder = () => {
                     <div className="Summary_card">
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                <h4>Order Details</h4>
+                                <h4>Today's Order</h4>
                             </div>
                             <div className='row' style={{ marginTop: "5px" }}>
                                 <div className="col-lg-4 col-md-12">

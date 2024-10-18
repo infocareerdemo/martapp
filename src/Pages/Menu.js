@@ -18,7 +18,12 @@ const FoodCard = ({ imgSrc, title, description, price, quantity, totalItemPrice,
                 <p className="dish-description">{description}</p>
             </div>
             <div className="dish-image">
-                <img src={imgSrc || "https://via.placeholder.com/150"} alt={title} />
+                {/* <img src={imgSrc || "https://via.placeholder.com/150"} alt={title} /> */}
+                <img
+        src={imgSrc || "https://via.placeholder.com/150"}
+        alt={title}
+        style={{ filter: productstatus === false ? "grayscale(100%)" : "none" }}
+    />
                 <div style={{ marginTop: "10px" }}>
                     {productstatus === false ? (
                         <span className="out-of-stock">Out of Stock</span>
@@ -34,10 +39,11 @@ const FoodCard = ({ imgSrc, title, description, price, quantity, totalItemPrice,
                     )}
 
                 </div>
-                {/* <div style={{ marginTop: "10px" }}>
+
+            </div>
+                            {/* <div style={{ marginTop: "10px" }}>
                     <button className="addtocard-button" style={{ color: "black", fontSize: "12px" }} onClick={handleAddToCard}>ADD TO CARD</button>
                 </div> */}
-            </div>
         </div>
     </div>
 );

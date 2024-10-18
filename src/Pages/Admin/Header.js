@@ -40,6 +40,9 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
         if (roleId == "1") {
             navigate("/AdminLogin")
         }
+        // else if (roleId == "3") {
+        //     navigate("/AdminLogin")
+        // }
         else {
             navigate("/");
         }
@@ -75,7 +78,7 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
     };
     return (
         <div>
-            {(roleid != "" && roleid === "1") && (
+            {(roleid != "" && (roleid === "1" || roleid === "3")) && (
                 <div className="header_container">
                     <div className="left_section">
                         {window.innerWidth <= 768 ?
