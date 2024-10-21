@@ -371,11 +371,11 @@ const UserInfo = () => {
                 }
             })
             .catch((error) => {
-                setAlertType("info"); // Set alert type to "error"
-                setAlertMsg("Invalid credentials");
-                setUserAlert(true);
+                // setAlertType("info"); // Set alert type to "error"
+                // setAlertMsg("Invalid credentials");
+                // setUserAlert(true);
 
-                console.log(error, "Error in saveUserDetails");
+                // console.log(error, "Error in saveUserDetails");
 
             });
 

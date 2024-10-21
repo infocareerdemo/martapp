@@ -50,7 +50,7 @@ const UserList = (props) => {
         },
         {
             title: 'Name',
-            field: 'name'
+            field: 'userName'
         },
         {
             title: 'Phone',
@@ -60,7 +60,10 @@ const UserList = (props) => {
             title: 'Email',
             field: 'emailId'
         },
-
+        {
+            title: 'wallet',
+            field: 'walletAmount'
+        },
         {
             title: 'Status',
             field: 'active',

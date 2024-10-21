@@ -46,6 +46,10 @@ import UserList from './Pages/CompanyAdmin/UserList';
 import AddUserByAdmin from './Pages/CompanyAdmin/AddUserByAdmin';
 import UpdateUserByAdmin from './Pages/CompanyAdmin/UpdateUserByAdmin';
 import UploadMultipleUser from './Pages/CompanyAdmin/UploadMultipleUser';
+import { Category } from '@mui/icons-material';
+import CategoryList from './Pages/Admin/CategoryList';
+import AddCategoryList from './Pages/Admin/AddCategoryList';
+import UpdateCategory from './Pages/Admin/UpdateCategory';
 
 function App() {
   const { appContextValue } = useAppContext();
@@ -106,7 +110,10 @@ function App() {
                 <Route path='/TodayOrder' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <TodayOrder /> : <AdmLogin />} />
               
                 <Route path='/OrderBasedOnUser' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <OrderBasedOnUser /> : <AdmLogin />} />
-                <Route path='/Report' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <Report /> : <UserInfo />} />
+                <Route path='/Report' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <Report /> : <AdmLogin />} />
+                <Route path='/CategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <CategoryList/> : <AdmLogin />} />
+                <Route path='/AddCategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <AddCategoryList /> : <AdmLogin />} />
+                <Route path='/UpdateCategory' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <UpdateCategory /> : <AdmLogin />} />
 
          {/* -------------- Company Admin-------------- */}
                 <Route path='/ImportFile' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <ImportFile></ImportFile> : <AdmLogin />} />

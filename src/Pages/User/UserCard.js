@@ -80,11 +80,11 @@ const UserCard = () => {
         }
     };
 
-    useEffect(() => {
-        GetAllCardDetails();
-        console.log("**********:" + companyName);
+    // useEffect(() => {
+    //     GetAllCardDetails();
+    //     console.log("**********:" + companyName);
 
-    }, []);
+    // }, []);
     const handleAddToCard = (food) => {
         console.log("Product ID:", food.productId);
         const url = "/cart/addProductByCart";
@@ -104,19 +104,19 @@ const UserCard = () => {
                 console.error("Error adding product to cart", error);
             });
     };
-    const GetAllCardDetails = () => {
-        const url = `/cart/getAllProductsByUserId`;
-        const data = { userId: userId };
-        apiServiceCall('GET', url, data, headers)
-            .then((response) => {
-                const data = response.data.map((item) => ({ ...item }));
-                console.log(data, "get all card Details")
-                setFoodData(data);
-            })
-            .catch((error) => {
-                console.log('Error fetching menu:', error);
-            });
-    };
+    // const GetAllCardDetails = () => {
+    //     const url = `/cart/getAllProductsByUserId`;
+    //     const data = { userId: userId };
+    //     apiServiceCall('GET', url, data, headers)
+    //         .then((response) => {
+    //             const data = response.data.map((item) => ({ ...item }));
+    //             console.log(data, "get all card Details")
+    //             setFoodData(data);
+    //         })
+    //         .catch((error) => {
+    //             console.log('Error fetching menu:', error);
+    //         });
+    // };
 
 
     const handlenavigate = () => {

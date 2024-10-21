@@ -48,6 +48,7 @@ const Admsidebar = () => {
                             Dashboard
                         </MenuItem>
                     </Menu>
+                   
                     <Menu iconShape="square" className="ClsMenu">
                         <MenuItem
                             onClick={() => navigate('/AdmMenu')}
@@ -55,6 +56,15 @@ const Admsidebar = () => {
                             className={['/AdmMenu', '/AdmupdateMenu', '/AdmaddMenu'].includes(location.pathname) ? 'active' : ''}
                         >
                             Menu
+                        </MenuItem>
+                    </Menu>
+                    <Menu iconShape="square" className="ClsMenu">
+                        <MenuItem
+                            onClick={() => navigate('/CategoryList')}
+                            icon={<AiOutlineProduct id="sidebaruser" color="black" />}
+                            className={['/CategoryList','/UpdateCategory','/AddCategoryList'].includes(location.pathname) ? 'active' : ''}
+                        >
+                            Category
                         </MenuItem>
                     </Menu>
                     <Menu iconShape="square" className="ClsMenu">

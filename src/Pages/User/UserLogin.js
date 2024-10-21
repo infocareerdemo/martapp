@@ -76,10 +76,10 @@ const UserLogin = () => {
                 }
             })
             .catch((error) => {
-                setAlertType("info");
-                setAlertMsg("Invalid credentials");
-                setUserAlert(true);
-                console.log(error, "Error in saveUserDetails");
+                // setAlertType("info");
+                // setAlertMsg("Invalid credentials");
+                // setUserAlert(true);
+                // console.log(error, "Error in saveUserDetails");
             });
     };
 

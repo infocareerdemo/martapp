@@ -37,7 +37,7 @@ export const AppProvider = ({ children }) => {
   const handleApiError = (error) => {
     console.log(error, "i");
   
-    if (error.response?.status === 403) {
+    if (error.response?.status === 403 || error.response?.status === 404) {
       const errorCode = error.response?.data?.errorCode;
       if (errorCode === 1001) {
         const errorMessage = error.response?.data?.message;

@@ -290,7 +290,7 @@ const AdmupdateMenu = (props) => {
                                         name="name"
                                         className='input_box'
                                         placeholder="Product Name"
-                                        maxLength={14}
+                                        maxLength={15}
                                         value={Productname}
                                         onChange={(e) => {
                                             const inputValue = e.target.value;

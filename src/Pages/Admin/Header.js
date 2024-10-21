@@ -31,9 +31,9 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
         navigate(-1);
     };
 
-    useEffect(() => {
-        GetAllCardDetails();
-    }, []);
+    // useEffect(() => {
+    //     GetAllCardDetails();
+    // }, []);
 
     const Logout = () => {
         var roleId = localStorage.getItem("roleId")
@@ -64,18 +64,18 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
     };
     const open = Boolean(anchorEl);
 
-    const GetAllCardDetails = () => {
-        const url = `/cart/getAllProductsByUserId`;
-        const data = { userId: userId };
-        apiServiceCall('GET', url, data, headers)
-            .then((response) => {
-                const data = response.data.length;
-                setCartItemCount(response.data.length)
-            })
-            .catch((error) => {
-                console.log('Error fetching menu:', error);
-            });
-    };
+    // const GetAllCardDetails = () => {
+    //     const url = `/cart/getAllProductsByUserId`;
+    //     const data = { userId: userId };
+    //     apiServiceCall('GET', url, data, headers)
+    //         .then((response) => {
+    //             const data = response.data.length;
+    //             setCartItemCount(response.data.length)
+    //         })
+    //         .catch((error) => {
+    //             console.log('Error fetching menu:', error);
+    //         });
+    // };
     return (
         <div>
             {(roleid != "" && (roleid === "1" || roleid === "3")) && (

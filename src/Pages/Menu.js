@@ -5,8 +5,8 @@ import { useAppContext } from './Components/AppProvider';
 import Header from './Admin/Header';
 import Alert from './Components/Alert';
 import "../style.css";
-import { Toast } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+import { Container, Row, Col } from 'react-bootstrap';
+import { logokcs,icecream,Biryani,poori,bokea,snacks } from './imgUrl';
 
 const FoodCard = ({ imgSrc, title, description, price, quantity, totalItemPrice, onAdd, onSubtract, productstatus, handleAddToCard }) => (
 
@@ -20,10 +20,10 @@ const FoodCard = ({ imgSrc, title, description, price, quantity, totalItemPrice,
             <div className="dish-image">
                 {/* <img src={imgSrc || "https://via.placeholder.com/150"} alt={title} /> */}
                 <img
-        src={imgSrc || "https://via.placeholder.com/150"}
-        alt={title}
-        style={{ filter: productstatus === false ? "grayscale(100%)" : "none" }}
-    />
+                    src={imgSrc || "https://via.placeholder.com/150"}
+                    alt={title}
+                    style={{ filter: productstatus === false ? "grayscale(100%)" : "none" }}
+                />
                 <div style={{ marginTop: "10px" }}>
                     {productstatus === false ? (
                         <span className="out-of-stock">Out of Stock</span>
@@ -41,7 +41,7 @@ const FoodCard = ({ imgSrc, title, description, price, quantity, totalItemPrice,
                 </div>
 
             </div>
-                            {/* <div style={{ marginTop: "10px" }}>
+            {/* <div style={{ marginTop: "10px" }}>
                     <button className="addtocard-button" style={{ color: "black", fontSize: "12px" }} onClick={handleAddToCard}>ADD TO CARD</button>
                 </div> */}
         </div>
@@ -53,9 +53,11 @@ const FoodList = () => {
     const navigate = useNavigate();
     const [Selectlocation, setSelectlocation] = useState(null);
     const [cartItemCount, setCartItemCount] = useState(0);
+    const [categoriesdata,setCategoriesdata] = useState([]);
 
     const { apiServiceCall } = useAppContext();
     const [token] = useState(localStorage.getItem("token"));
+
     const [userAlert, setUserAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState("");
     const [alertType, setAlertType] = useState("");
@@ -94,76 +96,53 @@ const FoodList = () => {
 
     useEffect(() => {
         locationbasedMenu();
+        categories();
+        // categoriebasedProduct();
         console.log("**********:" + companyName);
 
     }, []);
-    const GetAllCardDetails = () => {
-        const url = `/cart/getAllProductsByUserId`;
-        const data = { userId: userId };
+
+    const locationbasedMenu = (id) => {
+        const url = `/categories/getAllProductsByCategoryIdOrAll`;
+        const data = {categoryId:id};
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
-                const data = response.data.length;
+                console.log(response, "menuList")
+                const data = (foodData.length ? foodData : response.data).map((item) => ({
+                    ...item,
+                    quantity: item.quantity ?? 0
+                }));
+
+                setFoodData(data);
             })
             .catch((error) => {
                 console.log('Error fetching menu:', error);
             });
     };
-    const handleAddToCard = (food) => {
-        console.log("Product ID:", food.productId);
-        const url = "/cart/addProductByCart";
-        const data = {
-            "userDetail": {
-                "userId": userId,
-            },
-            "product": {
-                "productId": food.productId,
-            },
-            "quantity": 1,
-            "totalPrice": food.productPrice,
-            "productActive": true
-        };
-        apiServiceCall('POST', url, data, headers)
-            .then((response) => {
-                if (response.data !== '') {
-                    GetAllCardDetails();
-                    toast.success('Product Added to Card', {
-                        position: "bottom-center",
-                        autoClose: 2000, // Auto close after 3 seconds
-                        hideProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "colored",
-                    });
-                }
-            })
-            .catch((error) => {
-                toast.error('Product already Added to Card', {
-                    position: "bottom-center",
-                    autoClose: 2000, // Auto close after 3 seconds
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-            });
-    };
-    const locationbasedMenu = (id) => {
-        console.log('Fetching menu for location ID:', id);
-        const url = `/product/getAllProductsByLocation`;
-        const data = { id: locationId };
+    // const categoriebasedProduct = (id) => {
+    //     const url = `/categories`;
+    //     const data = {id:id};
+    //     apiServiceCall('GET', url, data, headers)
+    //         .then((response) => {
+    //             console.log(response, "categorieslist")
+    //             const data = (foodData.length ? foodData : response.data).map((item) => ({
+    //                 ...item,
+    //                 quantity: item.quantity ?? 0
+    //             }));
+
+    //             setFoodData(data);
+    //         })
+    //         .catch((error) => {
+    //             console.log('Error fetching menu:', error);
+    //         });
+    // };
+    const categories = () => {
+        const url = `/categories/getAllCategoriesWithProducts`;
+        const data = {};
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
-                console.log(response, "menu")
-                const data = (foodData.length ? foodData : response.data).map((item) => ({
-                    ...item,
-                    quantity: item.quantity ?? 0 // Preserve existing quantity if it exists, otherwise set to 0
-                }));
-                
-                setFoodData(data);
+                console.log(response, "GET ALL Categories")
+                setCategoriesdata(response.data)
             })
             .catch((error) => {
                 console.log('Error fetching menu:', error);
@@ -185,16 +164,20 @@ const FoodList = () => {
             setAlertMsg("Please select items before proceeding.");
         } else {
             navigate('/OrderSummary', { state: { userId: userId, selectedLocation: Selectlocation } });
-            // if (roleId === "2" && userId !== "") {
-
-            // } else {
-            //     navigate('/OrderSummary', { state: { selectedLocation: Selectlocation } });
-            // }
         }
     };
+
+    // const foodItems = [
+    //     { name: 'Foods', image: poori },
+    //     { name: 'Dessert', image: icecream },
+    //     { name: 'Biryanis', image: Biryani },
+    //     { name: 'Snacks', image: snacks },
+    //     { name: 'Flower bookey', image: bokea },
+        
+    // ];
+
     const totalAmount = foodData.reduce((total, item) => total + item.quantity * item.productPrice, 0);
     const hasItemsInCart = foodData.some((item) => item.quantity > 0);
-    const distinctItemCount = foodData.filter(item => item.quantity > 0).length;
 
     return (
         <div>
@@ -208,6 +191,29 @@ const FoodList = () => {
                     <h1 className="h3 mb-4" >
                         Kannan Catering Service
                     </h1>
+                    <div style={{ display: 'flex', width: '100%' }}>
+                        <div className="d-flex justify-content-center mt-3 w-100">
+                            <button className="btn">
+                                <i className="bi bi-arrow-left"></i>
+                            </button>
+                            <div className="row w-100 justify-content-center g-3">
+                                {/* Responsive Layout for Mobile and Larger Screens */}
+                                {categoriesdata.map((item, index) => (
+                                    <div  key={index} className="col-4 col-md-4 col-lg-2 text-center mb-4 "  onClick={() => locationbasedMenu(item.categoryId)}>
+                                        <img
+                                            src={base64ToImageUrl(item.categoryImage)}
+                                            alt={item.categoryName}
+                                            className="img-fluid rounded-circle img-category"
+                                        />
+                                        <p className='text-category'>{item.categoryName}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <button className="btn">
+                                <i className="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
                     {foodData.length > 0 ? (
                         <>
                             {foodData.map((food, index) => (
@@ -221,7 +227,7 @@ const FoodList = () => {
                                     totalItemPrice={food.productPrice * food.quantity}
                                     onAdd={() => addToCart(food.productId)}
                                     onSubtract={() => removeFromCart(food.productId)}
-                                    handleAddToCard={() => handleAddToCard(food)}
+                                // handleAddToCard={() => handleAddToCard(food)}
                                 />
                             ))}
                         </>

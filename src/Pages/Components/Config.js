@@ -13,6 +13,9 @@ switch (process.env.REACT_APP_ENVIRONMENT) {
     case "local":
         baseURL = "http://192.168.3.107:7080/api/v1";
         break;
+        case "manilocal":
+            baseURL = "http://192.168.236.250:7080/api/v1";
+            break;
 
     default:
         baseURL = "http://localhost:7080/api/v1";

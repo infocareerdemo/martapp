@@ -180,6 +180,11 @@
   position: relative;
 }
 
+.catagori_contanier {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  position: relative;
+}
 .input_icons {
   position: absolute;
   top: 15%;

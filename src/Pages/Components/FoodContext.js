@@ -8,23 +8,6 @@ export const useFoodContext = () => useContext(FoodContext);
 export const FoodProvider = ({ children }) => {
     const { apiServiceCall } = useAppContext();
 
-    // useEffect(() => {
-    //     getFoodItems()
-    // }, [])
-
-    const getFoodItems = () => {
-        const method = 'Get';
-        const url = `/food/items`;
-        const data = null;
-        apiServiceCall(method, url, data, null)
-            .then((response) => {
-                console.log(response);
-
-            })
-            .catch((error) => {
-                console.log("Error searching user:", error);
-            });
-    }
 
     const [foodData, setFoodData] = useState([]);
 

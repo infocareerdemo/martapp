@@ -138,6 +138,7 @@ const Login = () => {
       <Header
         title="Kannan Catering Service"
         hideLocation={true}
+        backicon={true}
       />
       <form onSubmit={handleLogin}>
         <div className="login-container">

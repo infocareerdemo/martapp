@@ -19,6 +19,7 @@ const UpdateUserByAdmin = (props) => {
     const [empcode, setEmpcode] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [wallet, setWallet] = useState('');
     const [name, setName] = useState('');
 
     const [userAlert, setUserAlert] = useState(false);
@@ -129,7 +130,7 @@ const UpdateUserByAdmin = (props) => {
             .then((response) => {
                 console.log(response,"get user details")
                 setEmpcode(response.data?.employeeCode || ""); // Use optional chaining and provide a default value
-                setName(response.data?.name || "");
+                setName(response.data?.userName || "");
                 setEmail(response.data?.emailId || "");
                 setPhone(response.data?.phoneNo || "");
                 
@@ -220,6 +221,7 @@ const UpdateUserByAdmin = (props) => {
                                     />
                                 </div>
                             </div>
+                            
                         </div>
                         {/* <button className="btnmenu" style={{ marginTop: "40px" }} onClick={handlesubmit}>
                             Update

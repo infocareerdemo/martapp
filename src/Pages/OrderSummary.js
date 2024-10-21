@@ -7,7 +7,7 @@ import useRazorpayPayment from './Components/RazorpayPayment';
 import Alert from './Components/Alert';
 import Header from './Admin/Header';
 
-const OrderInfo = ({ title, quantity, totalItemPrice, gst,productAmount, description, imgSrc, productId, onAdd, onSubtract, }) => (
+const OrderInfo = ({ title, quantity, totalItemPrice, gst, productAmount, description, imgSrc, productId, onAdd, onSubtract, }) => (
 
     <div className="OrderSummary_card" style={{ marginBottom: "10px" }}>
         <div className="row" >
@@ -135,10 +135,10 @@ const OrderSummary = () => {
     // , [foodData]);
     useEffect(() => {
         console.log(userDetails, foodData, "userDetails");
-    
+
         // Filter food items with quantity > 0
         const data = foodData.filter(food => food.quantity > 0);
-    
+
         // Navigate away if no valid food data is found
         if (data.length === 0) {
             navigate("/FoodList");
@@ -147,13 +147,16 @@ const OrderSummary = () => {
             SaveList(data);
         }
     }, [foodData]); // Effect runs when foodData changes
-    
+
     const headers = {
         Authorization: `Bearer ${token}`,
     };
 
     const handleRazorpayPayment = useRazorpayPayment();
 
+    const navigateBack = () => {
+        navigate("/FoodList")
+    }
 
     const saveWallet = () => {
         const productIds = foodList.map(food => food.products?.productId);
@@ -288,7 +291,7 @@ const OrderSummary = () => {
             <Header
                 title="Kannan Catering Service"
                 hideLocation={true}
-                backicon={false}
+                backicon={true}
             />
             <div className='maincontent_user'>
 
@@ -340,7 +343,7 @@ const OrderSummary = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Payment Method</h5>
                                 <ul className="list-group list-group-flush">
-                                <li className="list-group-item d-flex justify-content-between align-items-center">
+                                    <li className="list-group-item d-flex justify-content-between align-items-center">
                                         <div>
                                             <SlWallet style={{ marginBottom: "5px" }}></SlWallet>
                                             <label style={{ marginLeft: "5px" }}>Wallet</label>
@@ -352,7 +355,7 @@ const OrderSummary = () => {
                                                 checked={walletMethod}
                                                 onChange={handleWallet}
                                             />
-                                            ₹ {walletAmount || 0} 
+                                            ₹ {walletAmount || 0}
                                         </label>
                                     </li>
                                     <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -377,7 +380,7 @@ const OrderSummary = () => {
                                     </li>
                                 </ul>
                                 <ul className="list-group list-group-flush">
-                                  
+
                                     {walletMethod && (
                                         <li className="list-group-item d-flex justify-content-between align-items-center">
                                             <div>
@@ -418,7 +421,16 @@ const OrderSummary = () => {
                                 )}
                             </div>
                         </div>
-                        <div className="mt-6 order-ui" style={{ display: "flex", justifyContent: "flex-end" }}>
+                        <div className="mt-6 order-ui" style={{ display: "flex", justifyContent: "space-between" }}>
+                            <button
+                                style={{ backgroundColor: "red", color: "white" }}
+                                className="btn btn-block"
+                                onClick={navigateBack}
+                            >
+                                <span style={{ fontSize: "14px" }}>
+                                    &lt; Back
+                                </span>
+                            </button>
                             <button
                                 style={{ backgroundColor: "#00D700", color: "white" }}
                                 className="btn btn-block"

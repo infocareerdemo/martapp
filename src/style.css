@@ -422,3 +422,24 @@
   justify-content: space-between;
   width: 100%;
 }
+.img-category{
+  width: 80px;
+  height: 80px;
+}
+@media (max-width: 700px) {
+  .img-category {
+    width: 60px;
+    height: 60px;
+  }
+}
+.text-category {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px; /* Default for larger screens */
+}
+
+@media (max-width: 700px) {
+  .text-category {
+    font-size: 12px; /* Smaller font size for screens below 700px */
+  }
+}
