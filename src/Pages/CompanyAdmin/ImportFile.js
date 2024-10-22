@@ -236,7 +236,7 @@ const ImportFile = (props) => {
                     <div className="Summary_card">
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                <h4>Multiple User's Wallet Upload</h4>
+                                <h4>Manage Wallet Import</h4>
                             </div>
                             <div className='row' style={{ marginTop: "5px" }}>
                                 <div className="col-lg-4 col-md-12">

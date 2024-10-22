@@ -273,7 +273,7 @@ const AdmMenu = () => {
                     <div className="Summary_card">
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                <h4>Menu</h4>
+                                <h4>Product</h4>
                                 <button className="btnmenu" onClick={addmenu}>
                                     Add
                                 </button>

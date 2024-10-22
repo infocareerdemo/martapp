@@ -379,7 +379,7 @@ const AdmupdateMenu = (props) => {
                   alignItems: "center",
                 }}
               >
-                <h4>View Menu Item</h4>
+                <h4>Update Product</h4>
               </div>
             </div>
             <div className="row" style={{ marginTop: "20px", rowGap: "10px" }}>

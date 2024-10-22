@@ -166,7 +166,7 @@ const AddCategoryList = (props) => {
                     <div className="Summary_card">
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <h4>Add Menu Item</h4>
+                                <h4>Add Category</h4>
                             </div>
                         </div>
                         <div className='row' style={{ marginTop: "20px", rowGap: "10px" }}>

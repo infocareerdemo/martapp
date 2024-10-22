@@ -384,7 +384,7 @@ const Report = (props) => {
                                     <div className='input_contanier'>
                                         <label className="admaddmenu_label" style={{marginBottom:"55px"}}> <span className='required' style={{ color: "red" }} ></span></label>
                                     
-                                        <button className='input_box' style={{backgroundColor:"green",color:"white"}} onClick={DownloadReport}>DownloadUserWise</button>
+                                        <button className='input_box' style={{backgroundColor:"green",color:"white"}} onClick={DownloadReport}>Download Users Wise</button>
 
                                     </div>
                                 </div>
@@ -392,7 +392,7 @@ const Report = (props) => {
                                     <div className='input_contanier'>
                                         <label className="admaddmenu_label" style={{marginBottom:"55px"}}> <span className='required' style={{ color: "red" }} ></span></label>
                                        
-                                        <button className='input_box' style={{backgroundColor:"green",color:"white"}} onClick={DownloadTotalOrder}>DownloadTotalOrder</button>
+                                        <button className='input_box' style={{backgroundColor:"green",color:"white"}} onClick={DownloadTotalOrder}>Download Total Orders</button>
 
                                     </div>
                                 </div>
