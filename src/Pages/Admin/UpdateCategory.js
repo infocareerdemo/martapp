@@ -263,13 +263,12 @@ const UpdateCategory = (props) => {
             return { success: false, error: "Error uploading image" };
         }
     };
-    const handlesubmit = (productId,newStatus) => {
-        const url = `/categories/updateCategoryProducts?categoryId=${data.categoryId}`;
-        let requestData  = [{
-            "productId": productId,
-            "productCategory":false
-        }]
-        apiServiceCall('POST', url, requestData, headers)
+    const handlesubmit = () => {
+        const url = `/categories/updateCategory`;
+        const formData = new FormData();
+        formData.append("categoryName", categoryName);
+        formData.append("categoryImage", firstSignImg);
+        apiServiceCall('POST', url, formData, headers)
             .then((response) => {
                 console.log(response, "");
                 if (response.status === 200) {
@@ -280,9 +279,9 @@ const UpdateCategory = (props) => {
                     setAlertType("success")
                     setAlertMsg("Category Updated successfully");
 
-                    setDatas(prevData => prevData.map(user =>
-                        user.productId === productId ? { ...user, userActive: newStatus } : user
-                    ));
+                    // setDatas(prevData => prevData.map(user =>
+                    //     user.productId === productId ? { ...user, userActive: newStatus } : user
+                    // ));
                 }
             })
             .catch((error) => {
