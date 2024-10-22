@@ -27,6 +27,7 @@ const UpdateCategory = (props) => {
 
     const [MenuData, setMenuData] = useState([]);
     const [categories, setCategories] = useState("")
+        const [datas, setDatas] = useState([]);
 
     const [userAlert, setUserAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState("");
@@ -39,6 +40,7 @@ const UpdateCategory = (props) => {
 
     const location = useLocation();
     const id = location.state.id;
+    const { data } = location.state;
 
     const headers = {
         Authorization: `Bearer ${token}`,
@@ -47,9 +49,21 @@ const UpdateCategory = (props) => {
     const { apiServiceCall } = useAppContext();
 
     useEffect(() => {
-        ViewCategory();
+        // ViewCategory();
         GetallProducts();
     }, []);
+    useEffect(() => {
+        // Check if data is available and set category name and image
+        if (data) {
+            setCategoryName(data.categoryName);
+            if (data.categoryImage) {
+                const imageUrl = base64ToImageUrl(data.categoryImage);
+                setfirstSignImgPreview(imageUrl);
+            }
+        }
+        GetallProducts(); // Assuming you still want to fetch products
+    }, [data]); // Depend on data to ensure it runs when data changes
+    
     // Dummy data
     const validateFields = () => {
         if (categoryName.trim() === "") {
@@ -80,31 +94,7 @@ const UpdateCategory = (props) => {
     const handleFileInputChange = (event) => {
         event.target.value = '';
     };
-    const handlesubmit = () => {
-        // if (!validateFields()) {
-        //     return;
-        // }
-        const url = "/categories/saveOrUpdateCategory";
-        const formData = new FormData();
-        formData.append("categoryId", categories);
-        formData.append("productIds", productIds);
-
-        apiServiceCall('POST', url, formData, headers)
-            .then((response) => {
-                console.log(response, "");
-                if (response.status === 200) {
-                    setUserAlert(true)
-                    setAlertClose(() => () => {
-                        navigate("/CategoryList");
-                    })
-                    setAlertType("success")
-                    setAlertMsg("Category Updated successfully");
-                }
-            })
-            .catch((error) => {
-                console.log(error, "Error in saveUserDetails");
-            });
-    };
+ 
     const columns = [
         {
             title: 'Product Image',
@@ -148,17 +138,36 @@ const UpdateCategory = (props) => {
             title: 'Price',
             field: 'productPrice'
         },
+        // {
+        //     title: 'Status',
+        //     field: 'productActive',
+        //     render: rowData => (
+        //         <span
+        //             style={{
+        //                 color: rowData.productActive ? 'green' : 'red',
+        //             }}
+        //         >
+        //             {rowData.productActive ? 'Active' : 'Inactive'}
+        //         </span>
+        //     )
+        // },
         {
             title: 'Status',
-            field: 'productActive',
+            field: 'active',
             render: rowData => (
-                <span
+                <button
                     style={{
-                        color: rowData.productActive ? 'green' : 'red',
+                        backgroundColor: rowData.productCategory ? 'green' : 'red',
+                        color: 'white',
+                        border: 'none',
+                        padding: '5px 10px',
+                        cursor: 'pointer',
+                        borderRadius: '4px',
                     }}
+                    onClick={() => handlesubmit(rowData.productId, !rowData.productCategory)}
                 >
-                    {rowData.productActive ? 'Active' : 'Inactive'}
-                </span>
+                    {rowData.productCategory ? 'Active' : 'Remove'}
+                </button>
             )
         },
 
@@ -184,11 +193,11 @@ const UpdateCategory = (props) => {
     };
     const GetallProducts = (locationId) => {
         const url = `/categories/getAllProductsByCategoryIdOrAll`;
-        const data = { id: 1 };
-        apiServiceCall('GET', url, data, headers)
+        const reqdata = { categoryId: data.categoryId };
+        apiServiceCall('GET', url, reqdata, headers)
             .then((response) => {
                 console.log(response, "getallProducts");
-                setMenuData(response.data);
+                setDatas(response.data);
             })
             .catch((error) => {
                 console.error("Error fetching products:", error);
@@ -254,28 +263,32 @@ const UpdateCategory = (props) => {
             return { success: false, error: "Error uploading image" };
         }
     };
-
-    const ViewCategory = () => {
-        const url = `/categories/getAllProductsByCategoryIdOrAll`;
-        const data = {
-            categoryId: id,
-        };
-        apiServiceCall('GET', url, data, headers)
+    const handlesubmit = (productId,newStatus) => {
+        const url = `/categories/updateCategoryProducts?categoryId=${data.categoryId}`;
+        let requestData  = [{
+            "productId": productId,
+            "productCategory":false
+        }]
+        apiServiceCall('POST', url, requestData, headers)
             .then((response) => {
-                console.log(response, "viewcategory")
-                setCategoryName(response.data[0].categoryName);
-                setCategories(response.data[0].categoryId)
-                //    setCategoryName(response.data[0].categoryName)
-                if (response.data[0].categoryImage) {
-                    console.log(response.data.categoryImage,)
-                    const productImg = base64ToImageUrl(response.data[0].categoryImage);
-                    setfirstSignImgPreview(productImg);
-                } else {
-                    setfirstSignImgPreview(null);
-                }
+                console.log(response, "");
+                if (response.status === 200) {
+                    setUserAlert(true)
+                    setAlertClose(() => () => {
+                        navigate("/CategoryList");
+                    })
+                    setAlertType("success")
+                    setAlertMsg("Category Updated successfully");
 
+                    setDatas(prevData => prevData.map(user =>
+                        user.productId === productId ? { ...user, userActive: newStatus } : user
+                    ));
+                }
             })
-    }
+            .catch((error) => {
+                console.log(error, "Error in saveUserDetails");
+            });
+    };
 
     const handleSelectionChange = (rows) => {
         const selectedIdsArray = rows.map(row => (row.productId));
@@ -295,9 +308,9 @@ const UpdateCategory = (props) => {
                                 <h4>Update Category</h4>
                             </div>
                         </div>
-                        <div className='row' style={{ marginTop: "20px", rowGap: "10px" }}>
+                        <div className='row' style={{marginTop:"10px"}}>
                             <div className="col-lg-4 col-md-12">
-                                <div className='input_contanier'>
+                                <div className='catagori_contanier'>
                                     <label className="admaddmenu_label">Category Name <span className='required' style={{ color: "red" }}>*</span></label>
                                     <input
                                         type="text"
@@ -306,7 +319,7 @@ const UpdateCategory = (props) => {
                                         className='input_box'
                                         placeholder="Category Name"
                                         maxLength={20}
-                                        value={categoryName}
+                                        value={data.categoryName}
                                         onChange={(e) => {
                                             const inputValue = e.target.value;
                                             const regex = /^[a-zA-Z\s]*$/;
@@ -345,11 +358,11 @@ const UpdateCategory = (props) => {
                             <MaterialTable
                                 title=""
                                 columns={columns}
-                                data={MenuData}
+                                data={datas}
                                 options={{
-                                    selection: true,
+                                    // selection: true,
                                 }}
-                                onSelectionChange={handleSelectionChange}
+                                // onSelectionChange={handleSelectionChange}
                             />
                         </div>
                         <div className='col-lg-4 col-md-12' >

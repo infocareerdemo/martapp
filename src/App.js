@@ -8,7 +8,7 @@ import UserForm from './Pages/UserForm';
 import { FoodProvider } from './Pages/Components/FoodContext';
 import { useAppContext } from './Pages/Components/AppProvider';
 import { Modal } from 'react-bootstrap';
-import { RotatingLines,Triangle } from 'react-loader-spinner';
+import { RotatingLines, Triangle } from 'react-loader-spinner';
 import AdmMenu from './Pages/Admin/AdmMenu';
 import { SidebarProvider } from './Pages/Admin/SidebarContext';
 import AdmLogin from './Pages/Admin/AdmLogin';
@@ -108,19 +108,19 @@ function App() {
                 <Route path='/QrcodeDownload' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <QrcodeDownload /> : <AdmLogin />} />
                 {/* <Route path="/AdmupdateMenu" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <AdmupdateMenu /> : <FoodList />} /> */}
                 <Route path='/TodayOrder' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <TodayOrder /> : <AdmLogin />} />
-              
+
                 <Route path='/OrderBasedOnUser' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <OrderBasedOnUser /> : <AdmLogin />} />
                 <Route path='/Report' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <Report /> : <AdmLogin />} />
-                <Route path='/CategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <CategoryList/> : <AdmLogin />} />
+                <Route path='/CategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <CategoryList /> : <AdmLogin />} />
                 <Route path='/AddCategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <AddCategoryList /> : <AdmLogin />} />
                 <Route path='/UpdateCategory' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <UpdateCategory /> : <AdmLogin />} />
 
-         {/* -------------- Company Admin-------------- */}
+                {/* -------------- Company Admin-------------- */}
                 <Route path='/ImportFile' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <ImportFile></ImportFile> : <AdmLogin />} />
-                <Route path='/UserList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <UserList/> : <AdmLogin />} />
-                <Route path='/AddUserByAdmin' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <AddUserByAdmin/> : <AdmLogin />} />
-                <Route path='/UpdateUserByAdmin' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <UpdateUserByAdmin/> : <AdmLogin />} />
-                <Route path='/UploadMultipleUser' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <UploadMultipleUser/> : <AdmLogin />} />
+                <Route path='/UserList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <UserList /> : <AdmLogin />} />
+                <Route path='/AddUserByAdmin' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <AddUserByAdmin /> : <AdmLogin />} />
+                <Route path='/UpdateUserByAdmin' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <UpdateUserByAdmin /> : <AdmLogin />} />
+                <Route path='/UploadMultipleUser' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <UploadMultipleUser /> : <AdmLogin />} />
               </Routes>
             </SidebarProvider>
           </LocationProvider>

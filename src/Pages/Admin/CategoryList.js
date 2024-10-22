@@ -90,7 +90,7 @@ const CategoryList = () => {
                     variant="contained"
                     className="viewbtnmenu"
                     color="primary"
-                    onClick={() => handleActionClick(rowData.categoryId)}
+                    onClick={() => handleActionClick(rowData)}
                 >
                     View
                 </button>
@@ -100,8 +100,8 @@ const CategoryList = () => {
 
 
 
-    const handleActionClick = (id) => {
-        navigate('/UpdateCategory', { state: { id: id } });
+    const handleActionClick = (rowData) => {
+        navigate('/UpdateCategory', { state: { data: rowData } });
     };
 
     const headers = {

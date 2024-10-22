@@ -97,9 +97,6 @@ const FoodList = () => {
     useEffect(() => {
         locationbasedMenu();
         categories();
-        // categoriebasedProduct();
-        console.log("**********:" + companyName);
-
     }, []);
 
     const locationbasedMenu = (id) => {
@@ -108,34 +105,27 @@ const FoodList = () => {
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
                 console.log(response, "menuList")
-                const data = (foodData.length ? foodData : response.data).map((item) => ({
+                const data = (response.data.length ? response.data : foodData).map((item) => ({
                     ...item,
                     quantity: item.quantity ?? 0
                 }));
-
+                
+              
+                // const data = response.data.map((item) => ({
+                //     ...item,
+                //     quantity: item.quantity ?? 0
+                // }));
                 setFoodData(data);
             })
+            //
+            //     ...item,
+            //     quantity: item.quantity ?? 0
+            // }));
             .catch((error) => {
                 console.log('Error fetching menu:', error);
             });
     };
-    // const categoriebasedProduct = (id) => {
-    //     const url = `/categories`;
-    //     const data = {id:id};
-    //     apiServiceCall('GET', url, data, headers)
-    //         .then((response) => {
-    //             console.log(response, "categorieslist")
-    //             const data = (foodData.length ? foodData : response.data).map((item) => ({
-    //                 ...item,
-    //                 quantity: item.quantity ?? 0
-    //             }));
-
-    //             setFoodData(data);
-    //         })
-    //         .catch((error) => {
-    //             console.log('Error fetching menu:', error);
-    //         });
-    // };
+  
     const categories = () => {
         const url = `/categories/getAllCategoriesWithProducts`;
         const data = {};
@@ -167,15 +157,6 @@ const FoodList = () => {
         }
     };
 
-    // const foodItems = [
-    //     { name: 'Foods', image: poori },
-    //     { name: 'Dessert', image: icecream },
-    //     { name: 'Biryanis', image: Biryani },
-    //     { name: 'Snacks', image: snacks },
-    //     { name: 'Flower bookey', image: bokea },
-        
-    // ];
-
     const totalAmount = foodData.reduce((total, item) => total + item.quantity * item.productPrice, 0);
     const hasItemsInCart = foodData.some((item) => item.quantity > 0);
 
@@ -196,7 +177,7 @@ const FoodList = () => {
                             <button className="btn">
                                 <i className="bi bi-arrow-left"></i>
                             </button>
-                            <div className="row w-100 justify-content-center g-3">
+                            <div className="row w-100 justify-content-center g-3" style={{cursor:"pointer"}}>
                                 {/* Responsive Layout for Mobile and Larger Screens */}
                                 {categoriesdata.map((item, index) => (
                                     <div  key={index} className="col-4 col-md-4 col-lg-2 text-center mb-4 "  onClick={() => locationbasedMenu(item.categoryId)}>
@@ -227,7 +208,6 @@ const FoodList = () => {
                                     totalItemPrice={food.productPrice * food.quantity}
                                     onAdd={() => addToCart(food.productId)}
                                     onSubtract={() => removeFromCart(food.productId)}
-                                // handleAddToCard={() => handleAddToCard(food)}
                                 />
                             ))}
                         </>

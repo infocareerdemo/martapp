@@ -40,6 +40,7 @@ const UserList = (props) => {
     useEffect(() => {
         GetAllUser();
     }, []);
+
     const handleActionClick = (id) => {
         navigate('/UpdateUserByAdmin', { state: { id: id } });
     };
@@ -77,7 +78,7 @@ const UserList = (props) => {
                         cursor: 'pointer',
                         borderRadius: '4px',
                     }}
-                    onClick={() => handlesubmit(rowData.employeeCode, !rowData.userActive)}  // Toggle active status
+                    onClick={() => handlesubmit(rowData.employeeCode, !rowData.userActive)}
                 >
                     {rowData.userActive ? 'Active' : 'Inactive'}
                 </button>
@@ -137,6 +138,7 @@ const UserList = (props) => {
                 console.error("Error fetching orders:", error);
             });
     };
+    
     const adduser = () => {
         navigate("/AddUserByAdmin");
     }
