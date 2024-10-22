@@ -181,6 +181,15 @@ const AdmupdateMenu = (props) => {
       setAlertMsg("Please enter a valid price greater than zero");
       return false;
     }
+    if (selectedOptions.length === 0) {
+      setUserAlert(true);
+      setAlertClose(() => () => {
+        setUserAlert(false);
+      });
+      setAlertType("info");
+      setAlertMsg("Please select atleast one category");
+      return false;
+    }
     const url = "/product/createProductWithCategory";
     const formData = new FormData();
     formData.append("productId", id);

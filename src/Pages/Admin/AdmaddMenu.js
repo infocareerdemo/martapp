@@ -94,6 +94,15 @@ const AdmaddMenu = (props) => {
       setAlertMsg("Please select atleast one category");
       return false;
     }
+    if (price === "" || isNaN(price) || parseFloat(price) <= 0) {
+      setUserAlert(true);
+      setAlertClose(() => () => {
+        setUserAlert(false);
+      });
+      setAlertType("info");
+      setAlertMsg("Please enter a valid price greater than zero");
+      return false;
+    }
     // if (price.trim() === "" || isNaN(price) || parseFloat(price) <= 0) {
     //     // alert("Please enter a valid price greater than zero");
     //     setUserAlert(true)

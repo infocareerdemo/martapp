@@ -12,6 +12,7 @@ import { BiSolidDashboard } from "react-icons/bi";
 import { FaLocationDot } from "react-icons/fa6";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { AiOutlineImport } from "react-icons/ai";
+import { CiGrid42 } from "react-icons/ci";
 
 const Admsidebar = () => {
     var { sideBarCollapse, sideBarToggle, handleSidebarToggle, handleBackdropClick } = useSidebar();
@@ -61,7 +62,7 @@ const Admsidebar = () => {
                     <Menu iconShape="square" className="ClsMenu">
                         <MenuItem
                             onClick={() => navigate('/CategoryList')}
-                            icon={<AiOutlineProduct id="sidebaruser" color="black" />}
+                            icon={<CiGrid42 id="sidebaruser" color="black" />}
                             className={['/CategoryList','/UpdateCategory','/AddCategoryList'].includes(location.pathname) ? 'active' : ''}
                         >
                             Category
