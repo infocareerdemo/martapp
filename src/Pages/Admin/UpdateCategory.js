@@ -268,6 +268,7 @@ const UpdateCategory = (props) => {
         const formData = new FormData();
         formData.append("categoryName", categoryName);
         formData.append("categoryImage", firstSignImg);
+        formData.append("categoryId", data.categoryId)
         apiServiceCall('POST', url, formData, headers)
             .then((response) => {
                 console.log(response, "");
