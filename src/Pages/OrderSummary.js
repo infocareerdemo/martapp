@@ -274,11 +274,11 @@ const OrderSummary = () => {
     };
 
     const getwalletAmount = () => {
-        const url = `/wallet/getWalletDetailsByUserId`;
-        const data = { id: id };
+        const url = `/companyadmin/getWalletDetails`;
+        const data = { userId: id };
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
-                console.log(response, "walletAmount")
+                console.log(response, "walletAmount") 
                 setWalletAmount(response.data.walletAmount)
             })
             .catch((error) => {

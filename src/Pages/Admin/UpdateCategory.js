@@ -138,39 +138,6 @@ const UpdateCategory = (props) => {
             title: 'Price',
             field: 'productPrice'
         },
-        // {
-        //     title: 'Status',
-        //     field: 'productActive',
-        //     render: rowData => (
-        //         <span
-        //             style={{
-        //                 color: rowData.productActive ? 'green' : 'red',
-        //             }}
-        //         >
-        //             {rowData.productActive ? 'Active' : 'Inactive'}
-        //         </span>
-        //     )
-        // },
-        // {
-        //     title: 'Status',
-        //     field: 'active',
-        //     render: rowData => (
-        //         <button
-        //             style={{
-        //                 backgroundColor: rowData.productCategory ? 'green' : 'red',
-        //                 color: 'white',
-        //                 border: 'none',
-        //                 padding: '5px 10px',
-        //                 cursor: 'pointer',
-        //                 borderRadius: '4px',
-        //             }}
-        //             onClick={() => handlesubmit(rowData.productId, !rowData.productCategory)}
-        //         >
-        //             {rowData.productCategory ? 'Active' : 'Remove'}
-        //         </button>
-        //     )
-        // },
-
     ];
     const base64ToImageUrl = (base64String) => {
         try {
@@ -319,7 +286,7 @@ const UpdateCategory = (props) => {
                                         className='input_box'
                                         placeholder="Category Name"
                                         maxLength={20}
-                                        value={data.categoryName}
+                                        value={categoryName}
                                         onChange={(e) => {
                                             const inputValue = e.target.value;
                                             const regex = /^[a-zA-Z\s]*$/;

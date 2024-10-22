@@ -74,7 +74,7 @@ const AddCategoryList = (props) => {
         if (!validateFields()) {
             return;
         }
-        const url = "/categories/saveOrUpdateCategory";
+        const url = "/categories/saveOrUpdateCategory";  
         const formData = new FormData();
         formData.append("categoryName", categoryName);
         formData.append("categoryImage", firstSignImg);

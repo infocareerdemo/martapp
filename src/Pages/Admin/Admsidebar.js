@@ -105,7 +105,7 @@ const Admsidebar = () => {
                             icon={<AiOutlineImport id="sidebaruser" color="brown" />}
                             className={['/ImportFile'].includes(location.pathname) ? 'active' : ''}
                         >
-                            Import File
+                            Manage Wallet Import
                         </MenuItem>
                     </Menu>
                 </>

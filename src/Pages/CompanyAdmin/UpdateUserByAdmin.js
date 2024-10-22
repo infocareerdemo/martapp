@@ -19,6 +19,7 @@ const UpdateUserByAdmin = (props) => {
     const [empcode, setEmpcode] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    // const [wallet, setWalletAmount] = useState('');
     const [wallet, setWallet] = useState('');
     const [name, setName] = useState('');
 
@@ -221,11 +222,26 @@ const UpdateUserByAdmin = (props) => {
                                     />
                                 </div>
                             </div>
-                            
+                            {/* <div className="col-lg-4 col-md-12">
+                                <div className='input_contanier'>
+                                    <label className="admaddmenu_label">Wallet Amount <span className='required' style={{ color: "red" }}>*</span></label>
+                                    <input
+                                        type="walletamount"
+                                        id="walletamount"
+                                        name="Wallet Amount"
+                                        className='input_box'
+                                        placeholder="Enter Wallet Amount"
+                                        value={wallet}
+                                        onChange={(e) => {
+                                            setWallet(e.target.value)
+                                        }}
+                                    />
+                                </div>
+                            </div> */}
                         </div>
-                        {/* <button className="btnmenu" style={{ marginTop: "40px" }} onClick={handlesubmit}>
+                        <button className="btnmenu" style={{ marginTop: "40px" }}>
                             Update
-                        </button> */}
+                        </button>
                     </div>
                 </div>
                 <Alert

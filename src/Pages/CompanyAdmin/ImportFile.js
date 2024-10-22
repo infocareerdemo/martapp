@@ -14,6 +14,7 @@ import Alert from "../Components/Alert";
 import { REACT_APP_BASE_URL } from "../Components/Config";
 import * as XLSX from "xlsx"; // Import the xlsx library
 import { toast } from "react-toastify";
+import moment from 'moment';
 
 const ImportFile = (props) => {
     const { sideBarCollapse } = useSidebar();
@@ -39,6 +40,9 @@ const ImportFile = (props) => {
 
     const { apiServiceCall } = useAppContext();
     const [data, setData] = useState([]);
+
+    const minDateTime = moment().format('YYYY-MM-DDTHH:mm');
+
     const baseUrl = REACT_APP_BASE_URL;
     const headers = {
         Authorization: `Bearer ${token}`,
@@ -149,7 +153,8 @@ const ImportFile = (props) => {
                 if (response.data === "OTP SENT") {
                     toast.success("OTP Sented")
                     setOtpModalOpen(true);
-                    setAlertMsg("Mutiple user's saved successfully");
+                    setEnterOTP(null)
+                    setAlertMsg("Wallet updated successfully");
                 }
                
             })
@@ -187,7 +192,7 @@ const ImportFile = (props) => {
     };
     const SaveList = () => {
         console.log(data, "SaveList data");
-        const url = `/companyadmin/saveUserList?futureDate=${activeDate}`;
+        const url = `/companyadmin/addWallet?futureDate=${activeDate}`;
 
         const Importdata = data.map(item => ({
             employeeCode: item.employeeCode,
@@ -209,7 +214,7 @@ const ImportFile = (props) => {
                         setData([]); // Set the parsed data into state
                     })
 
-                    setAlertMsg("Mutiple user's saved successfully");
+                    setAlertMsg("Wallet saved successfully");
                 }
             })
             .catch((error) => {
@@ -238,11 +243,12 @@ const ImportFile = (props) => {
                                     <div className='input_contanier'>
                                         <label className="admaddmenu_label">Actived Date <span className='required' style={{ color: "red" }}>*</span></label>
                                         <input
-                                            type="date"
+                                         type="datetime-local" 
                                             id="activeDate"
                                             className='input_box'
                                             value={activeDate}
                                             onChange={(e) => setActiveDate(e.target.value)}
+                                            min={minDateTime} 
                                         />
                                     </div>
                                 </div>
@@ -263,7 +269,7 @@ const ImportFile = (props) => {
                                 <MaterialTable
                                     title=""
                                     columns={[
-                                        { title: "Empployee Code", field: "employeeCode" },
+                                        { title: "Employee Code", field: "employeeCode" },
                                         { title: "Phone", field: "phone" },
                                         // { title: "Name", field: "name" },
                                         // { title: "Email", field: "email" },
@@ -314,6 +320,7 @@ const ImportFile = (props) => {
                                         id="activeDate"
                                         className='input_box'
                                         value={enterOTP}
+                                        maxLength={6}
                                         onChange={(e) => setEnterOTP(e.target.value)}
                                     />
                                 </div>

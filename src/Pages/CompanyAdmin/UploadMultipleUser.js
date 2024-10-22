@@ -63,7 +63,7 @@ const UploadMultipleUser = (props) => {
                         return {
                             id: index + 1,
                             employeeCode: row[headers.indexOf('employeeCode')],
-                            name: row[headers.indexOf('name')],
+                            userName: row[headers.indexOf('userName')],
                             phone: row[headers.indexOf('phone')],
                             email: row[headers.indexOf('email')],
                             walletAmount: row[headers.indexOf('walletAmount')],
@@ -185,7 +185,7 @@ const UploadMultipleUser = (props) => {
 
         const Importdata = data.map(item => ({
             employeeCode: item.employeeCode,
-            name: item.name,
+            userName: item.userName,
             phoneNo: item.phone,
             emailId: item.email,
             // walletAmount: item.walletAmount,
@@ -205,9 +205,28 @@ const UploadMultipleUser = (props) => {
 
                     setAlertMsg("Mutiple user's saved successfully");
                 }
-            })
-            .catch((error) => {
+                // else if (response.status === 409){
+                //     console.log("error")
+                //     setUserAlert(true)
+                //     setAlertType("error")
+                //     setAlertClose(() => () => {
+                //         setUserAlert(false)
+                //     })
 
+                //     setAlertMsg("Duplicate employee found");
+                // }
+            })
+            .catch((response) => {
+                console.log(response,"error")
+                if (response.response.status === 409) {
+                    setUserAlert(true)
+                    setAlertType("error")
+                    setAlertClose(() => () => {
+                        setUserAlert(false)
+                    })
+
+                    setAlertMsg("Duplicate employee found");
+                }
             });
     };
     const handleModalToggle = () => {
@@ -219,56 +238,56 @@ const UploadMultipleUser = (props) => {
     return (
         <div>
 
-                <div>
-                    <div className='row' style={{ marginTop: "5px" }}>
-                        <div className="col-lg-4 col-md-12">
-                            <div className='input_contanier'>
-                                <label className="admaddmenu_label">Upload File <span className='required' style={{ color: "red" }}>*</span></label>
-                                <input
-                                    type="file"
-                                    accept=".xls,.xlsx"
-                                    onChange={handleFileUpload}
-                                    className='input_box'
-                                />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <MaterialTable
-                            title=""
-                            columns={[
-                                { title: "Empployee Code", field: "employeeCode" },
-                                { title: "Phone", field: "phone" },
-                                { title: "Name", field: "name" },
-                                { title: "Email", field: "email" },
-                                // { title: "Wallet Amount", field: "walletAmount" },
-                            ]}
-                            data={data}
-                            options={{
-                                search: true,
-                                paging: true,
-                                draggable: false,
-                                pageSize: 5,
-                                pageSizeOptions: [5, 10, 20],
-                                headerStyle: {
-                                    backgroundColor: '#EEE',
-                                    fontWeight: 'bold'
-                                },
-                                rowStyle: {
-                                    backgroundColor: '#FFF',
-                                },
-                                emptyRowsWhenPaging: false,
-                            }}
-                        />
-                    </div>
-                    <div className="col-lg-2 col-md-12">
+            <div>
+                <div className='row' style={{ marginTop: "5px" }}>
+                    <div className="col-lg-4 col-md-12">
                         <div className='input_contanier'>
-                            <label className="admaddmenu_label" style={{ marginBottom: "55px" }}> <span className='required' style={{ color: "red" }} ></span></label>
-                            <button className='input_box' style={{ backgroundColor: "green", color: "white" }} onClick={SaveList}>Submit File</button>
+                            <label className="admaddmenu_label">Upload File <span className='required' style={{ color: "red" }}>*</span></label>
+                            <input
+                                type="file"
+                                accept=".xls,.xlsx"
+                                onChange={handleFileUpload}
+                                className='input_box'
+                            />
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <MaterialTable
+                        title=""
+                        columns={[
+                            { title: "Employee Code", field: "employeeCode" },
+                            { title: "Phone", field: "phone" },
+                            { title: "User Name", field: "userName" },
+                            { title: "Email", field: "email" },
+                            // { title: "Wallet Amount", field: "walletAmount" },
+                        ]}
+                        data={data}
+                        options={{
+                            search: true,
+                            paging: true,
+                            draggable: false,
+                            pageSize: 5,
+                            pageSizeOptions: [5, 10, 20],
+                            headerStyle: {
+                                backgroundColor: '#EEE',
+                                fontWeight: 'bold'
+                            },
+                            rowStyle: {
+                                backgroundColor: '#FFF',
+                            },
+                            emptyRowsWhenPaging: false,
+                        }}
+                    />
+                </div>
+                <div className="col-lg-2 col-md-12">
+                    <div className='input_contanier'>
+                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}> <span className='required' style={{ color: "red" }} ></span></label>
+                        <button className='input_box' style={{ backgroundColor: "green", color: "white" }} onClick={SaveList}>Submit File</button>
+                    </div>
+                </div>
+            </div>
             <Alert
                 title={alertTitle}
                 msg={alertMsg}

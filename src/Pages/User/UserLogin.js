@@ -104,6 +104,7 @@ const UserLogin = () => {
                     localStorage.setItem("userId", response.data.userId)
                     localStorage.setItem("location", response.data.location.locationId)
                     localStorage.setItem("userName", response.data.employeeCode)
+                    // localStorage.setItem("wallet", response.data.walletAmount)
                     // localStorage.setItem("Mobile", response.data.location.locationId)
                     navigate('/FoodList');
 
