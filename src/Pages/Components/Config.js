@@ -2,7 +2,7 @@ let baseURL;
 
 switch (process.env.REACT_APP_ENVIRONMENT) {
     case "production":
-         baseURL = "https://kcs.infocareerindia.com/food/api/v1";
+         baseURL = "https://kcsmart.infocareerindia.com/mart/api/v1";
         break;
     case "test":
         baseURL = "https://foodqa.infocareerindia.com/food/api/v1";

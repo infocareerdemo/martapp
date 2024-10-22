@@ -55,7 +55,7 @@ const Admsidebar = () => {
                             icon={<AiOutlineProduct id="sidebaruser" color="green" />}
                             className={['/AdmMenu', '/AdmupdateMenu', '/AdmaddMenu'].includes(location.pathname) ? 'active' : ''}
                         >
-                            Menu
+                            Product
                         </MenuItem>
                     </Menu>
                     <Menu iconShape="square" className="ClsMenu">

@@ -151,25 +151,25 @@ const UpdateCategory = (props) => {
         //         </span>
         //     )
         // },
-        {
-            title: 'Status',
-            field: 'active',
-            render: rowData => (
-                <button
-                    style={{
-                        backgroundColor: rowData.productCategory ? 'green' : 'red',
-                        color: 'white',
-                        border: 'none',
-                        padding: '5px 10px',
-                        cursor: 'pointer',
-                        borderRadius: '4px',
-                    }}
-                    onClick={() => handlesubmit(rowData.productId, !rowData.productCategory)}
-                >
-                    {rowData.productCategory ? 'Active' : 'Remove'}
-                </button>
-            )
-        },
+        // {
+        //     title: 'Status',
+        //     field: 'active',
+        //     render: rowData => (
+        //         <button
+        //             style={{
+        //                 backgroundColor: rowData.productCategory ? 'green' : 'red',
+        //                 color: 'white',
+        //                 border: 'none',
+        //                 padding: '5px 10px',
+        //                 cursor: 'pointer',
+        //                 borderRadius: '4px',
+        //             }}
+        //             onClick={() => handlesubmit(rowData.productId, !rowData.productCategory)}
+        //         >
+        //             {rowData.productCategory ? 'Active' : 'Remove'}
+        //         </button>
+        //     )
+        // },
 
     ];
     const base64ToImageUrl = (base64String) => {

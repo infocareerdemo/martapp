@@ -6,7 +6,7 @@ import Header from './Admin/Header';
 import Alert from './Components/Alert';
 import "../style.css";
 import { Container, Row, Col } from 'react-bootstrap';
-import { logokcs,icecream,Biryani,poori,bokea,snacks } from './imgUrl';
+import { logokcs, icecream, Biryani, poori, bokea, snacks } from './imgUrl';
 
 const FoodCard = ({ imgSrc, title, description, price, quantity, totalItemPrice, onAdd, onSubtract, productstatus, handleAddToCard }) => (
 
@@ -53,7 +53,7 @@ const FoodList = () => {
     const navigate = useNavigate();
     const [Selectlocation, setSelectlocation] = useState(null);
     const [cartItemCount, setCartItemCount] = useState(0);
-    const [categoriesdata,setCategoriesdata] = useState([]);
+    const [categoriesdata, setCategoriesdata] = useState([]);
 
     const { apiServiceCall } = useAppContext();
     const [token] = useState(localStorage.getItem("token"));
@@ -68,6 +68,8 @@ const FoodList = () => {
     const locationId = localStorage.getItem("location");
     const companyName = localStorage.getItem("companyname");
     const userId = parseInt(localStorage.getItem("userId"), 10);
+
+    const [addedData, setaddedData] = useState([])
 
 
 
@@ -99,33 +101,13 @@ const FoodList = () => {
         categories();
     }, []);
 
-    const locationbasedMenu = (id) => {
-        const url = `/categories/getAllProductsByCategoryIdOrAll`;
-        const data = {categoryId:id};
-        apiServiceCall('GET', url, data, headers)
-            .then((response) => {
-                console.log(response, "menuList")
-                const data = (response.data.length ? response.data : foodData).map((item) => ({
-                    ...item,
-                    quantity: item.quantity ?? 0
-                }));
-                
-              
-                // const data = response.data.map((item) => ({
-                //     ...item,
-                //     quantity: item.quantity ?? 0
-                // }));
-                setFoodData(data);
-            })
-            //
-            //     ...item,
-            //     quantity: item.quantity ?? 0
-            // }));
-            .catch((error) => {
-                console.log('Error fetching menu:', error);
-            });
-    };
-  
+    useEffect(() => {
+        setaddedData((prevArray) => prevArray.map((item) => {
+            const updatedItem = foodData.find((updated) => updated.productId === item.productId);
+            return updatedItem ? { ...item, ...updatedItem } : item;
+        }));
+    }, [foodData])
+
     const categories = () => {
         const url = `/categories/getAllCategoriesWithProducts`;
         const data = {};
@@ -139,12 +121,39 @@ const FoodList = () => {
             });
     };
 
-
+    const locationbasedMenu = (id) => {
+        const url = `/categories/getAllProductsByCategoryIdOrAll`;
+        const data = { categoryId: id };
+        apiServiceCall('GET', url, data, headers)
+            .then((response) => {
+                console.log(response, "menuList", id)
+                if (id == undefined) {
+                    const data = (foodData.length > 0 ? foodData : response.data).map((item) => ({
+                        ...item,
+                        quantity: item.quantity ?? 0
+                    }));
+                    setFoodData(data);
+                    setaddedData(data)
+                } else {
+                    const updatedArray = response.data.map(item => {
+                        const match = addedData.find(obj => obj.productId === item.productId);
+                        if (match) {
+                            return { ...item, quantity: match.quantity };
+                        }
+                        return { ...item, quantity: 0 };
+                    });
+                    setFoodData(updatedArray);
+                }
+            })
+            .catch((error) => {
+                console.log('Error fetching menu:', error);
+            });
+    };
     const handlenavigate = () => {
         const userId = localStorage.getItem("userId");
         const roleId = localStorage.getItem("roleId");
-        const totalPrice = foodData.reduce((total, food) => total + food.quantity * food.productPrice, 0);
-
+        const totalPrice = addedData.reduce((total, food) => total + food.quantity * food.productPrice, 0);
+        setFoodData(addedData)
         if (totalPrice === 0) {
             setUserAlert(true)
             setAlertClose(() => () => {
@@ -157,8 +166,8 @@ const FoodList = () => {
         }
     };
 
-    const totalAmount = foodData.reduce((total, item) => total + item.quantity * item.productPrice, 0);
-    const hasItemsInCart = foodData.some((item) => item.quantity > 0);
+    const totalAmount = addedData.reduce((total, item) => total + item.quantity * item.productPrice, 0);
+    const hasItemsInCart = addedData.some((item) => item.quantity > 0);
 
     return (
         <div>
@@ -177,10 +186,10 @@ const FoodList = () => {
                             <button className="btn">
                                 <i className="bi bi-arrow-left"></i>
                             </button>
-                            <div className="row w-100 justify-content-center g-3" style={{cursor:"pointer"}}>
+                            <div className="row w-100 justify-content-center g-3" style={{ cursor: "pointer" }}>
                                 {/* Responsive Layout for Mobile and Larger Screens */}
                                 {categoriesdata.map((item, index) => (
-                                    <div  key={index} className="col-4 col-md-4 col-lg-2 text-center mb-4 "  onClick={() => locationbasedMenu(item.categoryId)}>
+                                    <div key={index} className="col-4 col-md-4 col-lg-2 text-center mb-4 " onClick={() => locationbasedMenu(item.categoryId)}>
                                         <img
                                             src={base64ToImageUrl(item.categoryImage)}
                                             alt={item.categoryName}
