@@ -188,6 +188,14 @@ const FoodList = () => {
                             </button>
                             <div className="row w-100 justify-content-center g-3" style={{ cursor: "pointer" }}>
                                 {/* Responsive Layout for Mobile and Larger Screens */}
+                                <div className="col-4 col-md-4 col-lg-2 text-center mb-4 "  onClick={() => locationbasedMenu("")}>
+                                    <img
+                                        src={snacks}
+                                        // alt={item.categoryName}
+                                        className="img-fluid rounded-circle img-category"
+                                    />
+                                    <p className='text-category'>All Products</p>
+                                </div>
                                 {categoriesdata.map((item, index) => (
                                     <div key={index} className="col-4 col-md-4 col-lg-2 text-center mb-4 " onClick={() => locationbasedMenu(item.categoryId)}>
                                         <img

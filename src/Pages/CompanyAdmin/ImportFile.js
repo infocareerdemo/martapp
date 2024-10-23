@@ -241,7 +241,7 @@ const ImportFile = (props) => {
                             <div className='row' style={{ marginTop: "5px" }}>
                                 <div className="col-lg-4 col-md-12">
                                     <div className='input_contanier'>
-                                        <label className="admaddmenu_label">Actived Date <span className='required' style={{ color: "red" }}>*</span></label>
+                                        <label className="admaddmenu_label">Activation Date <span className='required' style={{ color: "red" }}>*</span></label>
                                         <input
                                             type="datetime-local"
                                             id="activeDate"

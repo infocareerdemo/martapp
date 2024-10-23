@@ -384,10 +384,10 @@ const OrderBasedOnUser = () => {
                                         </label>
                                         <button
                                             className='input_box'
-                                            disabled={codflag === false}
+                                            disabled={codflag === false}  
                                             style={{
-                                                backgroundColor: "#AFB0B1",
-                                                color: "white",
+                                                backgroundColor: codflag === true ? "red" : "#AFB0B1",
+                                                color: codflag === true ? "white" : "white",
                                                 cursor: codflag === false ? "not-allowed" : "pointer",
                                                 display: "block",
                                                 width: "100%",
@@ -396,7 +396,7 @@ const OrderBasedOnUser = () => {
                                             }}
                                             onClick={codflag === false ? null : DeliveredBtn}
                                         >
-                                            Yet to Delivered
+                                            Yet to Deliver
                                         </button>
 
                                     </div>
@@ -405,6 +405,7 @@ const OrderBasedOnUser = () => {
 
                             </div>
                         }
+                         {/* ONLINE */}
                         {(payable > 0 || (payable === 0 && codAmount === 0 && walletAmount > 0)) && (
                             <>
                                 {delflag ? (
@@ -439,7 +440,7 @@ const OrderBasedOnUser = () => {
                                             className='input_box'
                                             // disabled={!codflag}
                                             style={{
-                                                backgroundColor: "#AFB0B1",
+                                                backgroundColor: "red",
                                                 color: "white",
                                                 cursor: "pointer",
                                                 display: "block",
@@ -449,7 +450,7 @@ const OrderBasedOnUser = () => {
                                             }}
                                             onClick={DeliveredBtn}
                                         >
-                                            Yet to Delivered
+                                            Yet to Deliver
                                         </button>
                                     </div>
                                     </div>
