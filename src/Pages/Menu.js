@@ -93,6 +93,7 @@ const FoodList = () => {
     const userId = parseInt(localStorage.getItem("userId"), 10);
 
     const [addedData, setaddedData] = useState([]);
+    const [categoriesId,setCategoriesId] = useState("")
 
     const headers = {
         Authorization: `Bearer ${token}`,
@@ -151,6 +152,7 @@ const FoodList = () => {
     };
 
     const locationbasedMenu = (id) => {
+        setCategoriesId(id)
         const url = `/categories/getAllProductsByCategoryIdOrAll`;
         const data = { categoryId: id };
         apiServiceCall("GET", url, data, headers)
@@ -216,7 +218,7 @@ const FoodList = () => {
             style={{ ...style }}
             onClick={onClick}
         >
-            {direction === "next" ? <FaArrowRightLong /> : <FaArrowLeftLong />}
+            {direction === "next" ? <FaArrowRightLong className="arrowsIcons" /> : <FaArrowLeftLong className="arrowsIcons"/>}
         </div>
     );
 
@@ -304,7 +306,7 @@ const FoodList = () => {
                                 <img
                                     src={snacks}
                                     // alt={item.categoryName}
-                                    className="img-fluid rounded-circle img-category"
+                                    className={`img-fluid rounded-circle img-category ${!categoriesId && "highlight-cat"}`}
                                 />
                                 <p className='text-category'>All Products</p>
                             </div>
@@ -317,8 +319,8 @@ const FoodList = () => {
                                     <img
                                         src={base64ToImageUrl(dish.categoryImage)}
                                         alt={dish.categoryName}
-                                        className="img-fluid rounded-circle img-category"
-                                    />
+                                        className={`img-fluid rounded-circle img-category ${categoriesId === dish.categoryId && "highlight-cat"}`}
+                                        />
                                     <p className='text-category'>{dish.categoryName}</p>
                                 </div>
                             ))}
