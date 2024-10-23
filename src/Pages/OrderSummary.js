@@ -299,24 +299,41 @@ const OrderSummary = () => {
         }
       });
   };
+//   const OrderPlacedZeroAmount = () => {
+//     const url = `/wallet/getOrderDetails?userId=${id}&orderId=${orderId}`;
+//     apiServiceCall("POST", url, foodData, headers)
+//       .then((response) => {
+//         console.log("OrderPlacedZeroAmount response:", response);
+//         if (response.status === 200 && response.data) {
+//           // Navigate to OrderPlaced with the response data
+//           navigate("/OrderPlaced", { state: { orderData: response.data } });
+//         } else {
+//           console.error("Unexpected response:", response);
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching order details:", error);
+//         // Handle error
+//       });
+//   };
   const OrderPlacedZeroAmount = () => {
     const url = `/wallet/getOrderDetails?userId=${id}&orderId=${orderId}`;
-    apiServiceCall("POST", url, foodData, headers)
-      .then((response) => {
-        console.log("OrderPlacedZeroAmount response:", response);
-        if (response.status === 200 && response.data) {
-          // Navigate to OrderPlaced with the response data
-          navigate("/OrderPlaced", { state: { orderData: response.data } });
-        } else {
-          console.error("Unexpected response:", response);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching order details:", error);
-        // Handle error
-      });
-  };
- 
+    const data = foodData.filter((e)=>e.quantity>0)
+    apiServiceCall('POST', url, data, headers)
+        .then((response) => {
+            console.log("OrderPlacedZeroAmount response:", response);
+            if (response.status === 200 && response.data) {
+                // Navigate to OrderPlaced with the response data
+                navigate('/OrderPlaced', { state: { orderData: response.data } });
+            } else {
+                console.error("Unexpected response:", response);
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching order details:", error);
+            // Handle error
+        });
+};
   const getwalletAmount = () => {
     const url = `/companyadmin/getWalletDetails`;
     const data = { userId: id };
