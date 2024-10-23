@@ -300,7 +300,7 @@ const FoodList = () => {
             </div> */}
                     <div className="top-dishes-slider">
                         <Slider {...settings}>
-                            <div className="col-4 col-md-4 col-lg-2 text-center mb-4 " onClick={() => locationbasedMenu("")}>
+                            <div className="dish-item" onClick={() => locationbasedMenu("")}>
                                 <img
                                     src={snacks}
                                     // alt={item.categoryName}
@@ -319,7 +319,7 @@ const FoodList = () => {
                                         alt={dish.categoryName}
                                         className="img-fluid rounded-circle img-category"
                                     />
-                                    <h3>{dish.categoryName}</h3>
+                                    <p className='text-category'>{dish.categoryName}</p>
                                 </div>
                             ))}
                         </Slider>
