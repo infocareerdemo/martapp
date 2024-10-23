@@ -257,7 +257,8 @@ const OrderSummary = () => {
     };
     const OrderPlacedZeroAmount = () => {
         const url = `/wallet/getOrderDetails?userId=${id}&orderId=${orderId}`;
-        apiServiceCall('POST', url, foodData, headers)
+        const data = foodData.filter((e) => e.quantity > 0)
+        apiServiceCall('POST', url, data, headers)
             .then((response) => {
                 console.log("OrderPlacedZeroAmount response:", response);
                 if (response.status === 200 && response.data) {
@@ -278,7 +279,7 @@ const OrderSummary = () => {
         const data = { userId: id };
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
-                console.log(response, "walletAmount") 
+                console.log(response, "walletAmount")
                 setWalletAmount(response.data.walletAmount)
             })
             .catch((error) => {
