@@ -57,11 +57,11 @@ const ImportFile = (props) => {
                 const firstSheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[firstSheetName];
                 const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-    
+
                 if (jsonData.length > 0) {
                     // Extract the first row as the header
                     const headers = jsonData[0].map(header => header.trim());
-    
+
                     // Extract the rest of the rows as data, filtering out empty rows
                     const formattedData = jsonData.slice(1).filter(row => {
                         return row[headers.indexOf('employeeCode')] && row[headers.indexOf('phone')]; // Add additional fields if needed
@@ -75,7 +75,7 @@ const ImportFile = (props) => {
                             walletAmount: row[headers.indexOf('walletAmount')],
                         };
                     });
-    
+
                     console.log("Parsed Excel Data:", formattedData); // Log the data in console
                     setData(formattedData); // Set the parsed data into state
                 } else {
@@ -85,7 +85,7 @@ const ImportFile = (props) => {
             reader.readAsBinaryString(file); // Read the file as binary string
         }
     };
-    
+
     // const handleFileUpload = (event) => {
     //     const file = event.target.files[0];
     //     if (file) {
@@ -156,7 +156,7 @@ const ImportFile = (props) => {
                     setEnterOTP(null)
                     setAlertMsg("Wallet updated successfully");
                 }
-               
+
             })
             .catch((error) => {
 
@@ -164,7 +164,7 @@ const ImportFile = (props) => {
     };
     const Otpverify = () => {
         const url = `/companyadmin/verifyOtp`;
-        const data = { 
+        const data = {
             userId: userid,
             reqOtp: enterOTP
         };
@@ -182,7 +182,7 @@ const ImportFile = (props) => {
                     })
                     setAlertMsg("OTP Verified Click OK to Submit");
                 }
-                else if(response.data === false) {
+                else if (response.data === false) {
                     toast.error("Invalid OTP")
                 }
             })
@@ -243,12 +243,12 @@ const ImportFile = (props) => {
                                     <div className='input_contanier'>
                                         <label className="admaddmenu_label">Actived Date <span className='required' style={{ color: "red" }}>*</span></label>
                                         <input
-                                         type="datetime-local" 
+                                            type="datetime-local"
                                             id="activeDate"
                                             className='input_box'
                                             value={activeDate}
                                             onChange={(e) => setActiveDate(e.target.value)}
-                                            min={minDateTime} 
+                                            min={minDateTime}
                                         />
                                     </div>
                                 </div>
@@ -261,6 +261,9 @@ const ImportFile = (props) => {
                                             onChange={handleFileUpload}
                                             className='input_box'
                                         />
+                                        <span style={{ fontSize: "10px" }}>
+                                            Note (file supports .xls,.xlsx)
+                                        </span>
                                     </div>
                                 </div>
                             </div>

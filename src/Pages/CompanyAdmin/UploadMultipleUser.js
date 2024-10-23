@@ -249,6 +249,9 @@ const UploadMultipleUser = (props) => {
                                 onChange={handleFileUpload}
                                 className='input_box'
                             />
+                             <span style={{ fontSize: "10px" }}>
+                                            Note (file supports .xls,.xlsx)
+                                        </span>
                         </div>
                     </div>
                 </div>
