@@ -301,7 +301,7 @@ const ImportFile = (props) => {
                 <div className="col-lg-4 col-md-12">
                   <div className="input_contanier">
                     <label className="admaddmenu_label">
-                      Actived Date{" "}
+                      Activation Date{" "}
                       <span className="required" style={{ color: "red" }}>
                         *
                       </span>
