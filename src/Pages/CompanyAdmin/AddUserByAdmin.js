@@ -224,6 +224,11 @@ const AddUserByAdmin = (props) => {
                                             onChange={(e) => {
                                                 setPhone(e.target.value)
                                             }}
+                                            onKeyPress={(e) => {
+                                                if (!/[0-9]/.test(e.key)) {
+                                                  e.preventDefault();
+                                                }
+                                              }}
                                         />
                                     </div>
                                 </div>

@@ -115,10 +115,10 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          setAlertType("info"); // Set alert type to "error"
-          setAlertMsg("Invalid credentials"); // Set the message
-          setUserAlert(true); // Show the alert
-          console.log(error, "Error in saveUserDetails");
+          // setAlertType("info"); // Set alert type to "error"
+          // setAlertMsg("Invalid credentials"); // Set the message
+          // setUserAlert(true); // Show the alert
+          // console.log(error, "Error in saveUserDetails");
         });
     }
   };
@@ -135,11 +135,11 @@ const Login = () => {
 
   return (
     <div>
-      <Header
+      {/* <Header
         title="Kannan Catering Service"
         hideLocation={true}
         backicon={true}
-      />
+      /> */}
       <form onSubmit={handleLogin}>
         <div className="login-container">
           <div className="login_maincontent" style={{ display: "flex" }}>

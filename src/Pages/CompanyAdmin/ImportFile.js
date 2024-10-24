@@ -188,8 +188,8 @@ const ImportFile = (props) => {
             setUserAlert(false);
             SaveList();
           });
-          setAlertMsg("OTP Verified Click OK to Submit");
-        } else if (response.data === false) {
+          setAlertMsg("OTP verified");  
+        } else if (response.data === false) {  
           toast.error("Invalid OTP");
         }
       })

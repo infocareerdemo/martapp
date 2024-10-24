@@ -190,7 +190,7 @@ const UpdateUserByAdmin = (props) => {
                                 <div className='input_contanier'>
                                     <label className="admaddmenu_label">Mobile Number <span className='required' style={{ color: "red" }}>*</span></label>
                                     <input
-                                        type="number"
+                                        type="tel"
                                         id="name"
                                         name="name"
                                         disabled
@@ -201,6 +201,11 @@ const UpdateUserByAdmin = (props) => {
                                         onChange={(e) => {
                                             setPhone(e.target.value)
                                         }}
+                                        onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                              e.preventDefault();
+                                            }
+                                          }}
                                     />
                                 </div>
                             </div>

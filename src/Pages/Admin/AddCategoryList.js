@@ -74,7 +74,7 @@ const AddCategoryList = (props) => {
         if (!validateFields()) {
             return;
         }
-        const url = "/categories/saveOrUpdateCategory";  
+        const url = "/categories/saveOrUpdateCategory";
         const formData = new FormData();
         formData.append("categoryName", categoryName);
         formData.append("categoryImage", firstSignImg);
@@ -87,7 +87,7 @@ const AddCategoryList = (props) => {
                         navigate("/CategoryList");
                     })
                     setAlertType("success")
-                    setAlertMsg("Category saved successfully");
+                    setAlertMsg("Category added successfully");
                 }
             })
             .catch((error) => {
@@ -209,7 +209,7 @@ const AddCategoryList = (props) => {
                                     />
                                     <span style={{ fontSize: '10px' }}>Note (.png,.jpeg, or .jpg file-Max Size 500KB)</span>
                                 </div>
-                                
+
                                 {firstSignImgPreview && (
                                     <div className="preview_card_img">
                                         <img src={firstSignImgPreview} alt="Selected" className='bondimgPreview' />
@@ -220,9 +220,21 @@ const AddCategoryList = (props) => {
 
                             </div>
                         </div>
-                        <button className="btnmenu" style={{ marginTop: "40px" }} onClick={handlesubmit}>
-                            Submit
-                        </button>
+
+
+                        <div style={{ display: "flex", gap: "10px" }}>
+                            <button className="btnmenu" style={{ marginTop: "40px" }} onClick={handlesubmit}>
+                                Submit
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => navigate(-1)}
+                                className="btnmenu"
+                                style={{ marginTop: "40px" }}
+                            >
+                                Back
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <Alert

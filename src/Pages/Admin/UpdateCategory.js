@@ -27,7 +27,7 @@ const UpdateCategory = (props) => {
 
     const [MenuData, setMenuData] = useState([]);
     const [categories, setCategories] = useState("")
-        const [datas, setDatas] = useState([]);
+    const [datas, setDatas] = useState([]);
 
     const [userAlert, setUserAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState("");
@@ -63,7 +63,7 @@ const UpdateCategory = (props) => {
         }
         GetallProducts(); // Assuming you still want to fetch products
     }, [data]); // Depend on data to ensure it runs when data changes
-    
+
     // Dummy data
     const validateFields = () => {
         if (categoryName.trim() === "") {
@@ -94,7 +94,7 @@ const UpdateCategory = (props) => {
     const handleFileInputChange = (event) => {
         event.target.value = '';
     };
- 
+
     const columns = [
         {
             title: 'Product Image',
@@ -263,7 +263,7 @@ const UpdateCategory = (props) => {
     };
 
     return (
-        
+
         <div>
             <Header />
             <Admsidebar />
@@ -275,7 +275,7 @@ const UpdateCategory = (props) => {
                                 <h4>Update Category</h4>
                             </div>
                         </div>
-                        <div className='row' style={{marginTop:"10px"}}>
+                        <div className='row' style={{ marginTop: "10px" }}>
                             <div className="col-lg-4 col-md-12">
                                 <div className='catagori_contanier'>
                                     <label className="admaddmenu_label">Category Name <span className='required' style={{ color: "red" }}>*</span></label>
@@ -329,12 +329,20 @@ const UpdateCategory = (props) => {
                                 options={{
                                     // selection: true,
                                 }}
-                                // onSelectionChange={handleSelectionChange}
+                            // onSelectionChange={handleSelectionChange}
                             />
                         </div>
-                        <div className='col-lg-4 col-md-12' >
+                        <div  style={{ gap: "10px" }}>
                             <button className="btnmenu" style={{ marginTop: "25px" }} onClick={handlesubmit}>
                                 Update
+                            </button>
+                            <button style={{marginLeft:"10px"}}
+                                type="button"
+                                onClick={() => navigate(-1)}
+                                className="btnmenu"
+                                // style={{ marginTop: "40px" }}
+                            >
+                                Back
                             </button>
                         </div>
                     </div>

@@ -19,17 +19,6 @@ const CategoryList = () => {
     const [categoriesdata,setCategoriesdata] = useState([]);
     const [token] = useState(localStorage.getItem("token"));
 
-    const [Selectlocation, setSelectlocation] = useState(null);
-    const [locationData, setLocationData] = useState([]);
-    const [locationId, setLocationId] = useState("");
-    const [userId] = useState(localStorage.getItem("userId"));
-
-    const [userAlert, setUserAlert] = useState(false);
-    const [alertMsg, setAlertMsg] = useState("");
-    const [alertType, setAlertType] = useState("");
-    const [alertTitle, setAlertTitle] = useState("");
-    const [alertConfirm, setAlertConfirm] = useState(() => null);
-    const [alertClose, setAlertClose] = useState(() => null);
 
     const addmenu = () => {
         navigate("/AddCategoryList");
@@ -79,7 +68,8 @@ const CategoryList = () => {
         {
             title: 'Category Name',
             field: 'categoryName',
-            customFilterAndSearch: (term, rowData) => rowData.productName.toLowerCase().includes(term.toLowerCase())
+            customFilterAndSearch: (term, rowData) => 
+                rowData.categoryName.toLowerCase().includes(term.toLowerCase())
 
         },
         {
@@ -145,10 +135,13 @@ const CategoryList = () => {
                                     data={categoriesdata}
                                     options={{
                                         search: true,
+                                        sorting: true,
                                         paging: true,
-                                        draggable: false,
-                                        pageSize: 5,
+                                        actionsColumnIndex: -1,
                                         pageSizeOptions: [5, 10, 20],
+                                        pageSize: 5,
+                                        draggable: false,
+                                        emptyRowsWhenPaging: false,
                                         headerStyle: {
                                             backgroundColor: '#EEE',
                                             fontWeight: 'bold'
@@ -156,21 +149,13 @@ const CategoryList = () => {
                                         rowStyle: {
                                             backgroundColor: '#FFF',
                                         },
-                                        emptyRowsWhenPaging: false,
+                                        // emptyRowsWhenPaging: false,
                                     }}
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
-                <Alert
-                    title={alertTitle}
-                    msg={alertMsg}
-                    open={userAlert}
-                    type={alertType}
-                    onClose={alertClose}
-                    onConfirm={alertConfirm}
-                />
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Admsidebar from "./Admsidebar";
 import { useSidebar } from "./SidebarContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from '../Components/AppProvider';
 import "./Sidebar.css";
 import "./Admstyle.css";
@@ -20,6 +20,8 @@ const OrderBasedOnUser = () => {
     const [paymentStatus, setpaymentStatus] = useState("")
     const [codflag, setcodflag] = useState("")
     const [delflag, setDelflag] = useState("")
+
+    const navigate = useNavigate();
 
     const location = useLocation();
     const id = location.state.id;
@@ -201,7 +203,7 @@ const OrderBasedOnUser = () => {
                                         className="list-group-item d-flex justify-content-between align-items-center"
                                         style={{ marginBottom: '10px' }}
                                     >
-                                        <div className="d-flex flex-column align-items-center">
+                                        <div className="d-flex flex-column align-items-center" >
                                             <img
                                                 src={base64ToImageUrl(orderDetail.products?.productImage) || "https://via.placeholder.com/150"}
                                                 alt={orderDetail.products?.productName || "Product"}
@@ -209,8 +211,8 @@ const OrderBasedOnUser = () => {
                                             />
                                             <span>{orderDetail.products?.productName || 'Product Name'}</span>
                                         </div>
-
-                                        <p>
+              
+                                        <p >
                                             <span style={{
                                                 border: '1px solid green',
                                                 backgroundColor: '#EAFFCA',
@@ -246,30 +248,30 @@ const OrderBasedOnUser = () => {
                                     <li className="list-group-item d-flex justify-content-between align-items-center orderHistory_label">
                                         {payable === 0 ? (
                                             <>
-                                               {paymentStatus === 'PAY_SUCCESS'
-                                            ? (
-                                                <>
-                                                    {payable > 0 && "Online"}
-                                                    {codAmount > 0 && "Cash On Delivery (COD)"}
-                                                    {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
-                                                </>
-                                            )
-                                            : ''
-                                        }
+                                                {paymentStatus === 'PAY_SUCCESS'
+                                                    ? (
+                                                        <>
+                                                            {payable > 0 && "Online"}
+                                                            {codAmount > 0 && "Cash On Delivery (COD)"}
+                                                            {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
+                                                        </>
+                                                    )
+                                                    : ''
+                                                }
                                                 <span> ₹ {codAmount || 0}</span>
                                             </>
                                         ) : (
                                             <>
                                                 {paymentStatus === 'PAY_SUCCESS'
-                                            ? (
-                                                <>
-                                                    {payable > 0 && "Online"}
-                                                    {codAmount > 0 && "Cash On Delivery (COD)"}
-                                                    {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
-                                                </>
-                                            )
-                                            : ''
-                                        }
+                                                    ? (
+                                                        <>
+                                                            {payable > 0 && "Online"}
+                                                            {codAmount > 0 && "Cash On Delivery (COD)"}
+                                                            {payable === 0 && codAmount === 0 && walletAmount > 0 && "Wallet"}
+                                                        </>
+                                                    )
+                                                    : ''
+                                                }
                                                 <span> ₹ {payable || 0}</span>
                                             </>
                                         )}
@@ -384,7 +386,7 @@ const OrderBasedOnUser = () => {
                                         </label>
                                         <button
                                             className='input_box'
-                                            disabled={codflag === false}  
+                                            disabled={codflag === false}
                                             style={{
                                                 backgroundColor: codflag === true ? "red" : "#AFB0B1",
                                                 color: codflag === true ? "white" : "white",
@@ -405,7 +407,7 @@ const OrderBasedOnUser = () => {
 
                             </div>
                         }
-                         {/* ONLINE */}
+                        {/* ONLINE */}
                         {(payable > 0 || (payable === 0 && codAmount === 0 && walletAmount > 0)) && (
                             <>
                                 {delflag ? (
@@ -432,33 +434,34 @@ const OrderBasedOnUser = () => {
                                     </div>
                                 ) : (
                                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "15px" }}>
-                                    <div className="col-lg-3 col-md-12">
-                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
-                                            <span className='required' style={{ color: "red" }}></span>
-                                        </label>
-                                        <button
-                                            className='input_box'
-                                            // disabled={!codflag}
-                                            style={{
-                                                backgroundColor: "red",
-                                                color: "white",
-                                                cursor: "pointer",
-                                                display: "block",
-                                                width: "100%",
-                                                borderRadius: "8px",
-                                                border: "none",
-                                            }}
-                                            onClick={DeliveredBtn}
-                                        >
-                                            Yet to Deliver
-                                        </button>
-                                    </div>
+                                        <div className="col-lg-3 col-md-12">
+                                            <label className="admaddmenu_label" style={{ marginBottom: "55px" }}>
+                                                <span className='required' style={{ color: "red" }}></span>
+                                            </label>
+                                            <button
+                                                className='input_box'
+                                                // disabled={!codflag}
+                                                style={{
+                                                    backgroundColor: "red",
+                                                    color: "white",
+                                                    cursor: "pointer",
+                                                    display: "block",
+                                                    width: "100%",
+                                                    borderRadius: "8px",
+                                                    border: "none",
+                                                }}
+                                                onClick={DeliveredBtn}
+                                            >
+                                                Yet to Deliver
+                                            </button>
+                                        </div>
                                     </div>
                                 )}
                             </>
                         )}
-
+                       
                     </div>
+
                 </div>
 
             </div>

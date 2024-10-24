@@ -539,13 +539,23 @@ const AdmaddMenu = (props) => {
                 </div>
               </div>
             </div>
-            <button
-              className="btnmenu"
-              style={{ marginTop: "40px" }}
-              onClick={handlesubmit}
-            >
-              Submit
-            </button>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <button
+                className="btnmenu"
+                style={{ marginTop: "40px" }}
+                onClick={handlesubmit}
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className="btnmenu"
+                style={{ marginTop: "40px" }}
+              >
+                Back
+              </button>
+            </div>
           </div>
         </div>
         <Alert

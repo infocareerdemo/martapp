@@ -152,7 +152,7 @@ const UserList = (props) => {
                     <div className="Summary_card">
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                <h4>User's</h4>
+                                <h4>Users</h4>
                                 <button className="btnmenu" onClick={adduser}>
                                     Add
                                 </button>

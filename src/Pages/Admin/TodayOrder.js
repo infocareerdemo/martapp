@@ -192,7 +192,7 @@ const TodayOrder = () => {
                     <div className="Summary_card">
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                <h4>Today's Order</h4>
+                                <h4>Today Orders</h4>
                             </div>
                             <div className='row' style={{ marginTop: "5px" }}>
                                 <div className="col-lg-4 col-md-12">

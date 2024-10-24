@@ -98,6 +98,7 @@ const AdmMenu = () => {
         {
             title: 'Product Image',
             field: 'productImage',
+            sorting: false,
             render: rowData => {
                 const imageUrl = base64ToImageUrl(rowData.productImage);
                 return (
@@ -114,6 +115,7 @@ const AdmMenu = () => {
         {
             title: 'Product Name',
             field: 'productName',
+            sortable:true,
             customFilterAndSearch: (term, rowData) => rowData.productName.toLowerCase().includes(term.toLowerCase())
 
         },
@@ -145,6 +147,7 @@ const AdmMenu = () => {
         {
             title: 'Status',
             field: 'productActive',
+            sorting: false,
             render: rowData => (
                 <button
                     style={{
