@@ -191,6 +191,7 @@ const UpdateUserByAdmin = (props) => {
     const SaveList = () => {
         const url = `/companyadmin/updateWalletToOneUser`;
         const data = {
+            userId:id,
             employeeCode: empcode,
             // userName: name,
             emailId: email,

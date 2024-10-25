@@ -312,6 +312,7 @@ const ImportFile = (props) => {
                       value={activeDate}
                       onChange={(e) => setActiveDate(e.target.value)}
                       min={minDateTime}
+                      onKeyDown={(e) => e.preventDefault()} 
                     />
                   </div>
                 </div>

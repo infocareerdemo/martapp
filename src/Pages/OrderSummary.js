@@ -76,7 +76,7 @@ const OrderSummary = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("online");
   const [walletMethod, setWalletMethod] = useState(null);
-  const [walletAmount, setWalletAmount] = useState("");
+  const [walletAmount, setWalletAmount] = useState(0);
   const [remainingAmount, setRemainingAmount] = useState(orderList.totalAmount);
   const [walletRedeemedAmount, setWalletRedeemedAmount] = useState(0);
 
@@ -403,6 +403,7 @@ const OrderSummary = () => {
                         value="online"
                         checked={walletMethod}
                         onChange={handleWallet}
+                        disabled={walletAmount === 0}
                       />
                       ₹ {walletAmount || 0}
                     </label>

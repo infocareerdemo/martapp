@@ -105,7 +105,7 @@ const OrderPlaced = () => {
                                     className="list-group-item d-flex justify-content-between align-items-center"
                                     style={{ marginBottom: '10px' }}
                                 >
-                                    <div className="d-flex flex-column align-items-center">
+                                    <div className="d-flex flex-column">
                                         <img
                                             src={base64ToImageUrl(orderDetail.products?.productImage) || "https://via.placeholder.com/150"}
                                             alt={orderDetail.products?.productName || "Product"}
