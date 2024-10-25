@@ -23,21 +23,21 @@ const OrderPlaced = () => {
         navigate("/FoodList");
     }
 
-    useEffect(() => {
-        const handleBrowserBack = () => {
-            if (location.pathname !== "/FoodList") {  // Customize behavior only if not already on FoodList
-                handleBack();
-            }
-        };
+    // useEffect(() => {
+    //     const handleBrowserBack = () => {
+    //         if (location.pathname !== "/FoodList") {  // Customize behavior only if not already on FoodList
+    //             handleBack();
+    //         }
+    //     };
 
-        window.history.pushState(null, null, window.location.href); // This prevents going back directly to a previous page
-        window.addEventListener("popstate", handleBrowserBack); // Listen for back navigation
+    //     window.history.pushState(null, null, window.location.href); // This prevents going back directly to a previous page
+    //     window.addEventListener("popstate", handleBrowserBack); // Listen for back navigation
 
-        // Clean up the listener on component unmount
-        return () => {
-            window.removeEventListener("popstate", handleBrowserBack);
-        };
-    }, [location.pathname]);
+    //     // Clean up the listener on component unmount
+    //     return () => {
+    //         window.removeEventListener("popstate", handleBrowserBack);
+    //     };
+    // }, [location.pathname]);
 
     useEffect(() => {
         console.log('*******Payment ID:', paymentId);
