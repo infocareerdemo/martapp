@@ -62,7 +62,7 @@ const UserList = (props) => {
             field: 'emailId'
         },
         {
-            title: 'wallet',
+            title: 'Wallet',
             field: 'walletAmount'
         },
         {

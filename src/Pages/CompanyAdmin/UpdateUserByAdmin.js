@@ -367,12 +367,18 @@ const UpdateUserByAdmin = (props) => {
                                             </span>
                                         </label>
                                         <input
-                                            type="number"
+                                            type="numeric"
                                             id="activeDate"
                                             className="input_box"
                                             value={enterOTP}
                                             maxLength={6}
+                                            // onChange={(e) => setEnterOTP(e.target.value)}
                                             onChange={(e) => setEnterOTP(e.target.value)}
+                                            onKeyPress={(e) => {
+                                              if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                              }
+                                            }}
                                         />
                                     </div>
                                 </div>
