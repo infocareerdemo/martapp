@@ -36,7 +36,7 @@ export const AppProvider = ({ children }) => {
   };
   const handleApiError = (error) => {
     console.log(error, "i");
-  
+
     if (error.response?.status === 403 || error.response?.status === 404 || error.response?.status === 400 || error.response?.status === 409 || error.response?.status === 401) {
       const errorCode = error.response?.data?.errorCode;
       if (errorCode === 1001 || errorCode === 1000 || errorCode === 1002) {
@@ -47,22 +47,22 @@ export const AppProvider = ({ children }) => {
         });
         setAlertType("error");
         setAlertMsg(errorMessage);
-      } 
-      // else {
-      //   setUserAlert(true);
-      //   setAlertTittle("Info");
-      //   setAlertMsg("Your current session has been expired. Please log in again.");
-      //   setAlertType("info");
-      //   setAlertClose(() => () => {
-      //     window.location.href = "/";
-      //     localStorage.clear();
-      //   });
-      // }
+      }
+      if (error.response?.data?.status === 401) {
+        setUserAlert(true);
+        setAlertTittle("Info");
+        setAlertMsg("Your current session has been expired. Please log in again.");
+        setAlertType("info");
+        setAlertClose(() => () => {
+          window.location.href = "/";
+          localStorage.clear();
+        });
+      }
     }
-  
+
     throw error;
   };
-  
+
   // const handleApiError = (error) => {
   //   console.log(error,"i")
 

@@ -60,7 +60,7 @@ const AddUserByAdmin = (props) => {
                 setUserAlert(false)
             })
             setAlertType("info")
-            setAlertMsg("Empcode is required");
+            setAlertMsg("Employee Code is required");
             return false;
         }
         if (phone.trim() === "") {

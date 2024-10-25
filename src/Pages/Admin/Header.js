@@ -29,24 +29,25 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
   const [token] = useState(localStorage.getItem("token"));
 
   const [cartItemCount, setCartItemCount] = useState("");
+  const [walletAmount,setWalletAmount] = useState("");
   const isAdminLogin = location.pathname === "/AdminLogin";
 
   const handleBackClick = () => {
     navigate(-1);
   };
 
-  // useEffect(() => {
-  //     GetAllCardDetails();
-  // }, []);
+  useEffect(() => {
+    getwalletAmount();
+  }, []);
 
   const Logout = () => {
     var roleId = localStorage.getItem("roleId");
-    if (roleId == "1") {
-      navigate("/AdminLogin");
-    }
-    // else if (roleId == "3") {
-    //     navigate("/AdminLogin")
+    // if (roleId == "1") {
+    //   navigate("/AdminLogin");
     // }
+     if (roleId == "3") {
+        navigate("/AdminLogin")
+    }
     else {
       navigate("/");
     }
@@ -68,18 +69,18 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
   };
   const open = Boolean(anchorEl);
 
-  // const GetAllCardDetails = () => {
-  //     const url = `/cart/getAllProductsByUserId`;
-  //     const data = { userId: userId };
-  //     apiServiceCall('GET', url, data, headers)
-  //         .then((response) => {
-  //             const data = response.data.length;
-  //             setCartItemCount(response.data.length)
-  //         })
-  //         .catch((error) => {
-  //             console.log('Error fetching menu:', error);
-  //         });
-  // };
+  const getwalletAmount = () => {
+    const url = `/companyadmin/getWalletDetails`;
+    const data = { userId: userId };
+    apiServiceCall("GET", url, data, headers)
+        .then((response) => {
+            console.log(response, "walletAmount");
+            setWalletAmount(response.data.walletAmount);
+        })
+        .catch((error) => {
+            console.log("Error fetching menu:", error);
+        });
+};
   return (
     <div>
       {roleid != "" && (roleid === "1" || roleid === "3") && (
@@ -187,6 +188,7 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
                 <div className="menu_section">
                   <h3>Welcome {userName}</h3>
                   <ul>
+                  <li>Wallet ₹ {walletAmount}</li>
                     <li onClick={() => navigate("/MyAccount")}>My Account</li>
                     <li onClick={() => navigate("/MyOrders")}>Your Orders</li>
                     <li onClick={Logout}>Logout</li>

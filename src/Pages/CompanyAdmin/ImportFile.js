@@ -162,7 +162,7 @@ const ImportFile = (props) => {
       .then((response) => {
         console.log(response, "Otpsent response");
         if (response.data === "OTP SENT") {
-          toast.success("OTP Sented");
+          toast.success("OTP sented successfully");
           setOtpModalOpen(true);
           setEnterOTP(null);
           setAlertMsg("Wallet updated successfully");

@@ -54,7 +54,7 @@ const UserList = (props) => {
             field: 'userName'
         },
         {
-            title: 'Phone',
+            title: 'Mobile Number',
             field: 'phone'
         },
         {

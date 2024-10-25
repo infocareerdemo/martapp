@@ -5,7 +5,14 @@ import { useSidebar } from "../Admin/SidebarContext";
 import { useAppContext } from '../Components/AppProvider';
 import { useNavigate, useLocation } from "react-router-dom";
 import Alert from "../Components/Alert";
+import { Modal } from "react-bootstrap";
+import {
+    AiOutlineClose,
+    AiOutlineEye,
+    AiOutlineEyeInvisible,
+} from "react-icons/ai";
 
+import { toast } from "react-toastify";
 const UpdateUserByAdmin = (props) => {
     const { sideBarCollapse } = useSidebar();
     const [roleId] = useState(localStorage.getItem("Role_id"));
@@ -16,12 +23,15 @@ const UpdateUserByAdmin = (props) => {
     const [formErrors, setFormErrors] = useState({});
     const [token] = useState(localStorage.getItem("token"));
 
+    // const [Id,setId] = useState("");
     const [empcode, setEmpcode] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     // const [wallet, setWalletAmount] = useState('');
     const [wallet, setWallet] = useState('');
     const [name, setName] = useState('');
+    const [data, setData] = useState([]);
+    const [activeDate, setActiveDate] = useState("");
 
     const [userAlert, setUserAlert] = useState(false);
     const [alertMsg, setAlertMsg] = useState("");
@@ -29,6 +39,12 @@ const UpdateUserByAdmin = (props) => {
     const [alertTitle, setAlertTitle] = useState("");
     const [alertConfirm, setAlertConfirm] = useState(() => null);
     const [alertClose, setAlertClose] = useState(() => null);
+
+    const [userid] = useState(localStorage.getItem("userId"));
+
+    const [enterOTP, setEnterOTP] = useState("");
+
+    const [otpModalOpen, setOtpModalOpen] = useState(false);
 
     const location = useLocation();
     const id = location.state.id;
@@ -42,6 +58,9 @@ const UpdateUserByAdmin = (props) => {
     useEffect(() => {
         ViewProducts();
     }, []);
+    const closeModal = () => {
+        setOtpModalOpen(false);
+    };
 
     // Dummy data
     const validateFields = () => {
@@ -54,24 +73,15 @@ const UpdateUserByAdmin = (props) => {
             setAlertMsg("Name is required");
             return false;
         }
-        if (empcode.trim() === "") {
-            setUserAlert(true)
-            setAlertClose(() => () => {
-                setUserAlert(false)
-            })
-            setAlertType("info")
-            setAlertMsg("Empcode is required");
-            return false;
-        }
-        if (phone.trim() === "") {
-            setUserAlert(true)
-            setAlertClose(() => () => {
-                setUserAlert(false)
-            })
-            setAlertType("info")
-            setAlertMsg("Mobile Number is required");
-            return false;
-        }
+        // if (phone.trim() === "") {
+        //     setUserAlert(true)
+        //     setAlertClose(() => () => {
+        //         setUserAlert(false)
+        //     })
+        //     setAlertType("info")
+        //     setAlertMsg("Mobile Number is required");
+        //     return false;
+        // }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (email.trim() === "") {
@@ -99,10 +109,11 @@ const UpdateUserByAdmin = (props) => {
         if (!validateFields()) {
             return;
         }
-        const url = `/companyadmin/addNewUser`;
+        const url = `/companyadmin/updateUser`;
         const data = {
+            userId: id,
             employeeCode: empcode,
-            name: name,
+            userName: name,
             emailId: email,
             phoneNo: phone
         };
@@ -112,10 +123,10 @@ const UpdateUserByAdmin = (props) => {
                 if (response.status === 200) {
                     setUserAlert(true)
                     setAlertClose(() => () => {
-                        navigate("/AdmMenu");
+                        setUserAlert(false)
                     })
                     setAlertType("success")
-                    setAlertMsg("Product saved successfully");
+                    setAlertMsg("User updated successfully");
                 }
             })
             .catch((error) => {
@@ -134,9 +145,73 @@ const UpdateUserByAdmin = (props) => {
                 setName(response.data?.userName || "");
                 setEmail(response.data?.emailId || "");
                 setPhone(response.data?.phoneNo || "");
-
+                setWallet(response.data?.walletAmount || "")
             })
     }
+    const Otpsent = () => {
+        const url = `/companyadmin/verifyCmpnyAdminAndSendOtp`;
+        const data = { userId: userid };
+        apiServiceCall("GET", url, data, headers)
+            .then((response) => {
+                console.log(response, "Otpsent response");
+                if (response.data === "OTP SENT") {
+                    toast.success("OTP sented successfully");
+                    setOtpModalOpen(true);
+                    setEnterOTP(null);
+                    setAlertMsg("Wallet updated successfully");
+                }
+            })
+            .catch((error) => { });
+    };
+    const Otpverify = () => {
+        const url = `/companyadmin/verifyOtp`;
+        const data = {
+            userId: userid,
+            reqOtp: enterOTP,
+        };
+        apiServiceCall("GET", url, data, headers)
+            .then((response) => {
+                console.log(response, "Otpsent response");
+                if (response.data === true) {
+                    setOtpModalOpen(false);
+                    setEnterOTP("");
+                    setUserAlert(true);
+                    setAlertType("success");
+                    setAlertClose(() => () => {
+                        setUserAlert(false);
+                        SaveList();
+                    });
+                    setAlertMsg("OTP verified");
+                } else if (response.data === false) {
+                    toast.error("Invalid OTP");
+                }
+            })
+            .catch((error) => { });
+    };
+    const SaveList = () => {
+        const url = `/companyadmin/updateWalletToOneUser`;
+        const data = {
+            employeeCode: empcode,
+            // userName: name,
+            emailId: email,
+            phoneNo: phone,
+            walletAmount: wallet
+        };
+        apiServiceCall("POST", url, data, headers)
+            .then((response) => {
+                console.log(response, "SaveList response");
+                if (response.status === 200) {
+                    setUserAlert(true);
+                    setAlertType("success");
+                    setAlertClose(() => () => {
+                        setUserAlert(false);
+                    });
+
+                    setAlertMsg("Wallet saved successfully");
+                }
+            })
+            .catch((error) => { });
+    };
     return (
         <div>
             <Header />
@@ -152,24 +227,6 @@ const UpdateUserByAdmin = (props) => {
                         <div className='row' style={{ marginTop: "20px", rowGap: "10px" }}>
                             <div className="col-lg-4 col-md-12">
                                 <div className='input_contanier'>
-                                    <label className="admaddmenu_label">Name <span className='required' style={{ color: "red" }}>*</span></label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        disabled
-                                        className='input_box'
-                                        placeholder="Enter Name"
-                                        maxLength={100}
-                                        value={name}
-                                        onChange={(e) => {
-                                            setName(e.target.value)
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-lg-4 col-md-12">
-                                <div className='input_contanier'>
                                     <label className="admaddmenu_label">Employee Code <span className='required' style={{ color: "red" }}>*</span></label>
                                     <input
                                         type="text"
@@ -180,12 +237,27 @@ const UpdateUserByAdmin = (props) => {
                                         placeholder="Enter Employee Code"
                                         maxLength={20}
                                         value={empcode}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-12">
+                                <div className='input_contanier'>
+                                    <label className="admaddmenu_label">Name <span className='required' style={{ color: "red" }}>*</span></label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        className='input_box'
+                                        placeholder="Enter Name"
+                                        maxLength={100}
+                                        value={name}
                                         onChange={(e) => {
-                                            setEmpcode(e.target.value)
+                                            setName(e.target.value)
                                         }}
                                     />
                                 </div>
                             </div>
+
                             <div className="col-lg-4 col-md-12">
                                 <div className='input_contanier'>
                                     <label className="admaddmenu_label">Mobile Number <span className='required' style={{ color: "red" }}>*</span></label>
@@ -193,7 +265,6 @@ const UpdateUserByAdmin = (props) => {
                                         type="tel"
                                         id="name"
                                         name="name"
-                                        disabled
                                         className='input_box'
                                         placeholder="Enter Mobile Number"
                                         maxLength={10}
@@ -217,7 +288,6 @@ const UpdateUserByAdmin = (props) => {
                                         type="text"
                                         id="name"
                                         name="name"
-                                        disabled
                                         className='input_box'
                                         placeholder="Enter Email Address"
                                         value={email}
@@ -227,7 +297,7 @@ const UpdateUserByAdmin = (props) => {
                                     />
                                 </div>
                             </div>
-                            {/* <div className="col-lg-4 col-md-12">
+                            <div className="col-lg-4 col-md-12">
                                 <div className='input_contanier'>
                                     <label className="admaddmenu_label">Wallet Amount <span className='required' style={{ color: "red" }}>*</span></label>
                                     <input
@@ -242,7 +312,7 @@ const UpdateUserByAdmin = (props) => {
                                         }}
                                     />
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                         {/* <button className="btnmenu" style={{ marginTop: "40px" }}>
                             Update
@@ -251,8 +321,16 @@ const UpdateUserByAdmin = (props) => {
                             <button
                                 className="btnmenu"
                                 style={{ marginTop: "40px" }}
+                                onClick={handlesubmit}
                             >
                                 Update
+                            </button>
+                            <button
+                                className="btnmenu"
+                                style={{ marginTop: "40px" }}
+                                onClick={Otpsent}
+                            >
+                                Update Wallet
                             </button>
                             <button
                                 type="button"
@@ -264,6 +342,67 @@ const UpdateUserByAdmin = (props) => {
                             </button>
                         </div>
                     </div>
+                    <Modal
+                        dialogClassName="modal-dialog modal-md"
+                        centered
+                        show={otpModalOpen}
+                    >
+                        <Modal.Header>
+                            <div className="modal_subhead">
+                                <span className="modal_head_txt">Verify OTP</span>
+                                <AiOutlineClose
+                                    className="moda_closel_icon"
+                                    onClick={() => closeModal()}
+                                />
+                            </div>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="modal_body_container">
+                                <div className="col-lg-12 col-md-12">
+                                    <div className="input_contanier">
+                                        <label className="admaddmenu_label">
+                                            OTP{" "}
+                                            <span className="required" style={{ color: "red" }}>
+                                                *
+                                            </span>
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="activeDate"
+                                            className="input_box"
+                                            value={enterOTP}
+                                            maxLength={6}
+                                            onChange={(e) => setEnterOTP(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <div className="col-lg-6 col-md-12">
+                                        <label
+                                            className="admaddmenu_label"
+                                            style={{ marginBottom: "55px" }}
+                                        >
+                                            {" "}
+                                            <span className="required" style={{ color: "red" }}></span>
+                                        </label>
+                                        <button
+                                            className="input_box"
+                                            style={{ backgroundColor: "green", color: "white" }}
+                                            onClick={Otpverify}
+                                        >
+                                            Verify
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                    </Modal>
                 </div>
                 <Alert
                     title={alertTitle}

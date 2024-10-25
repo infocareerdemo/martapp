@@ -40,7 +40,7 @@ const Admsidebar = () => {
         >
             {roleId === '1' && (
                 <>
-                    <Menu iconShape="square" className="ClsMenu">
+                    {/* <Menu iconShape="square" className="ClsMenu">
                         <MenuItem
                             onClick={() => navigate('/AdminDashboard')}
                             icon={<BiSolidDashboard id="sidebaruser" />}
@@ -48,7 +48,7 @@ const Admsidebar = () => {
                         >
                             Dashboard
                         </MenuItem>
-                    </Menu>
+                    </Menu> */}
 
                     <Menu iconShape="square" className="ClsMenu">
                         <MenuItem

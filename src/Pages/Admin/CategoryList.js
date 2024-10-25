@@ -52,6 +52,7 @@ const CategoryList = () => {
     const columns = [
         {
             title: 'Category Image',
+            sorting:false,
             render: rowData => {
                 const imageUrl = base64ToImageUrl(rowData.categoryImage);
                 return (
@@ -75,6 +76,7 @@ const CategoryList = () => {
         {
             title: 'Action',
             field: 'action',
+            sorting:false,
             render: rowData => (
                 <button
                     variant="contained"

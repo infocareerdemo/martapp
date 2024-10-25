@@ -81,6 +81,7 @@ const TodayOrder = () => {
         {
             title: 'Action',
             field: 'action',
+            sorting:false,
             render: rowData => (
                 <button
                     className="viewbtnmenu"
