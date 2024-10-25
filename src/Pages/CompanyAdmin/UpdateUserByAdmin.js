@@ -73,15 +73,15 @@ const UpdateUserByAdmin = (props) => {
             setAlertMsg("Name is required");
             return false;
         }
-        // if (phone.trim() === "") {
-        //     setUserAlert(true)
-        //     setAlertClose(() => () => {
-        //         setUserAlert(false)
-        //     })
-        //     setAlertType("info")
-        //     setAlertMsg("Mobile Number is required");
-        //     return false;
-        // }
+        if (phone.trim() === "") {
+            setUserAlert(true)
+            setAlertClose(() => () => {
+                setUserAlert(false)
+            })
+            setAlertType("info")
+            setAlertMsg("Mobile Number is required");
+            return false;
+        }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (email.trim() === "") {
