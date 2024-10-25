@@ -137,7 +137,7 @@ const ImportFile = (props) => {
     if (!activeDate) {
       setUserAlert(true);
       setAlertType("error");
-      setAlertMsg("Please select an Active Date.");
+      setAlertMsg("Please select an Activation Date.");
       setAlertClose(() => () => {
         setUserAlert(false);
       });

@@ -3,7 +3,7 @@ import Header from "../Admin/Header";
 import Admsidebar from "../Admin/Admsidebar";
 import { useSidebar } from "../Admin/SidebarContext";
 import { useAppContext } from '../Components/AppProvider';
-import { useNavigate, useLocation } from "react-router-dom";  
+import { useNavigate, useLocation } from "react-router-dom";
 import Alert from "../Components/Alert";
 
 const UpdateUserByAdmin = (props) => {
@@ -104,7 +104,7 @@ const UpdateUserByAdmin = (props) => {
             employeeCode: empcode,
             name: name,
             emailId: email,
-            phoneNo : phone
+            phoneNo: phone
         };
         apiServiceCall('POST', url, data, headers)
             .then((response) => {
@@ -129,12 +129,12 @@ const UpdateUserByAdmin = (props) => {
         };
         apiServiceCall('GET', url, data, headers)
             .then((response) => {
-                console.log(response,"get user details")
+                console.log(response, "get user details")
                 setEmpcode(response.data?.employeeCode || ""); // Use optional chaining and provide a default value
                 setName(response.data?.userName || "");
                 setEmail(response.data?.emailId || "");
                 setPhone(response.data?.phoneNo || "");
-                
+
             })
     }
     return (
@@ -203,9 +203,9 @@ const UpdateUserByAdmin = (props) => {
                                         }}
                                         onKeyPress={(e) => {
                                             if (!/[0-9]/.test(e.key)) {
-                                              e.preventDefault();
+                                                e.preventDefault();
                                             }
-                                          }}
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -244,9 +244,25 @@ const UpdateUserByAdmin = (props) => {
                                 </div>
                             </div> */}
                         </div>
-                        <button className="btnmenu" style={{ marginTop: "40px" }}>
+                        {/* <button className="btnmenu" style={{ marginTop: "40px" }}>
                             Update
-                        </button>
+                        </button> */}
+                        <div style={{ display: "flex", gap: "10px" }}>
+                            <button
+                                className="btnmenu"
+                                style={{ marginTop: "40px" }}
+                            >
+                                Update
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => navigate(-1)}
+                                className="btnmenu"
+                                style={{ marginTop: "40px" }}
+                            >
+                                Back
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <Alert

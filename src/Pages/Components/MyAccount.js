@@ -32,7 +32,7 @@ const MyAccount = () => {
         apiServiceCall('GET', url, data,headers)
             .then((response) => {
                 console.log(response, "UserDetails");
-                setUserName(response.data.userName);
+                setUserName(response.data.employeeCode);
                 setPhone(response.data.phoneNo);
             })
             .catch((error) => {
@@ -48,13 +48,13 @@ const MyAccount = () => {
                 hideLocation={true}
             />
             <form>
-                <div className="login-container">
+                <div className="login-container" style={{marginTop:"10px"}}>
                     <div className='login_maincontent'>
 
                         <h2 className="welcome_text" style={{ marginBottom: "10px" }}>Account Information </h2>
 
                         <div className='col-12 col-md-4'>
-                            <label className='login_label'>Emp ID </label>
+                            <label className='login_label'>Emp Code</label>
                             <div className='input_contanier'>
                                 <input
                                     id="name"

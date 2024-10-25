@@ -107,7 +107,7 @@ const Login = () => {
               navigate("/AdmMenu");
             }
             else if (response.data.role?.roleId === 3) {
-              navigate("/ImportFile");
+              navigate("/UserList");
             }
             else {
               navigate("/")

@@ -39,7 +39,7 @@ export const AppProvider = ({ children }) => {
   
     if (error.response?.status === 403 || error.response?.status === 404 || error.response?.status === 400 || error.response?.status === 409 || error.response?.status === 401) {
       const errorCode = error.response?.data?.errorCode;
-      if (errorCode === 1001 || errorCode === 1000) {
+      if (errorCode === 1001 || errorCode === 1000 || errorCode === 1002) {
         const errorMessage = error.response?.data?.message;
         setUserAlert(true);
         setAlertClose(() => () => {

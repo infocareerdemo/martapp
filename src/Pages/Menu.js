@@ -224,7 +224,7 @@ const FoodList = () => {
 
     const settings = {
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 6, // Show 4 dishes at a time, adjust based on design
         slidesToScroll: 1, // Scroll one dish at a time
@@ -235,21 +235,21 @@ const FoodList = () => {
                 breakpoint: 1024, // Adjust number of slides for different screen sizes
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 1,
+                    slidesToScroll: 2,
                 },
             },
             {
                 breakpoint: 768,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
                 },
             },
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
                 },
             },
         ],

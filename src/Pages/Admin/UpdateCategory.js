@@ -212,11 +212,18 @@ const UpdateCategory = (props) => {
                     }
                 }
             } else {
-                fileInput.value = '';
-                setFormErrors({ ...formErrors, firstSignImg: "Invalid file format. Please upload a .png, .jpeg, or .jpg file." });
+                fileInput.value = "";
                 setfirstSignImg(null);
                 setfirstSignImgPreview(null);
-            }
+                setUserAlert(true);
+                setAlertClose(() => () => {
+                  setUserAlert(false);
+                });
+                setAlertType("error");
+                setAlertMsg("Invalid file format. Please upload a .png, .jpeg, or .jpg file.");
+                setfirstSignImg(null);
+                setfirstSignImgPreview(null);
+              }
         }
     };
     const imageUploadApi = async (file) => {

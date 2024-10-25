@@ -110,36 +110,6 @@ const AdmupdateMenu = (props) => {
     });
   };
 
-  const validateFields = () => {
-    // if (Productname.trim() === "") {
-    //     // alert("Product name is required");
-    //     setUserAlert(true)
-    //     setAlertClose(() => () => {
-    //         setUserAlert(false)
-    //     })
-    //     setAlertType("info")
-    //     setAlertMsg("Product name is required");
-    //     return false;
-    // }
-    // if (ProductDesc.trim() === "") {
-    //     setUserAlert(true)
-    //     setAlertClose(() => () => {
-    //         setUserAlert(false)
-    //     })
-    //     setAlertType("info")
-    //     setAlertMsg("Product description is required");
-    //     return false;
-    // }
-    // if (price === "" || isNaN(price) || parseFloat(price) <= 0) {
-    //     setUserAlert(true)
-    //     setAlertClose(() => () => {
-    //         setUserAlert(false)
-    //     })
-    //     setAlertType("info")
-    //     setAlertMsg("Please enter a valid price greater than zero");
-    //     return false;
-    // }
-  };
   const statusOptions = [
     { value: true, label: "Active" },
     { value: false, label: "Inactive" },
@@ -270,11 +240,14 @@ const AdmupdateMenu = (props) => {
         }
       } else {
         fileInput.value = "";
-        setFormErrors({
-          ...formErrors,
-          firstSignImg:
-            "Invalid file format. Please upload a .png, .jpeg, or .jpg file.",
+        setfirstSignImg(null);
+        setfirstSignImgPreview(null);
+        setUserAlert(true);
+        setAlertClose(() => () => {
+          setUserAlert(false);
         });
+        setAlertType("error");
+        setAlertMsg("Invalid file format. Please upload a .png, .jpeg, or .jpg file.");
         setfirstSignImg(null);
         setfirstSignImgPreview(null);
       }

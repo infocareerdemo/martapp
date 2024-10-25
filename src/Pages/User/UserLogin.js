@@ -38,32 +38,23 @@ const UserLogin = () => {
 
     const intervalRef = useRef(null);
 
-    const validateForm = () => {
+    const validateForm = (requireOtp = false) => {
         const newErrors = {};
-
-        // Validate Employee Code
         if (!empCode) {
             newErrors.empCode = "Employee Code is required";
         }
-
-        // Validate OTP when it's visible
-        if (otpflag && !phoneOtp) {
+        if (requireOtp && otpflag && !phoneOtp) {
             newErrors.phoneOtp = "Mobile OTP is required";
         }
-
         setErrors(newErrors);
-
-        // If there are no errors, return true
         return Object.keys(newErrors).length === 0;
     };
 
     const handleGenerateOtp = (event) => {
         event.preventDefault();
-        // Validate before submitting
-        if (!validateForm()) {
+        if (!validateForm(false)) { // Do not validate OTP
             return;
         }
-
         const url = "/user/verifyEmployeeCodeAndGenerateOtp";
         let data = {
             "employeeCode": empCode,
@@ -76,21 +67,14 @@ const UserLogin = () => {
                 }
             })
             .catch((error) => {
-                // setAlertType("info");
-                // setAlertMsg("Invalid credentials");
-                // setUserAlert(true);
-                // console.log(error, "Error in saveUserDetails");
             });
     };
 
     const handleLogin = (event) => {
         event.preventDefault();
-
-        // Validate before submitting
-        if (!validateForm()) {
+        if (!validateForm(true)) { // Validate OTP
             return;
         }
-
         const url = "/user/login";
         let data = {
             "employeeCode": empCode,
@@ -104,17 +88,11 @@ const UserLogin = () => {
                     localStorage.setItem("userId", response.data.userId)
                     localStorage.setItem("location", response.data.location.locationId)
                     localStorage.setItem("userName", response.data.employeeCode)
-                    // localStorage.setItem("wallet", response.data.walletAmount)
-                    // localStorage.setItem("Mobile", response.data.location.locationId)
                     navigate('/FoodList');
 
                 }
             })
             .catch((error) => {
-                // setAlertType("info");
-                // setAlertMsg("Invalid credentials");
-                // setUserAlert(true);
-                // console.log(error, "Error in saveUserDetails");
             });
     };
 
@@ -161,8 +139,13 @@ const UserLogin = () => {
                                         setErrors((prevErrors) => ({ ...prevErrors, phoneOtp: "" })); // Clear error on change
                                     }}
                                 />
+
                                 {/* Display Error Message for OTP */}
                                 {errors.phoneOtp && <p className="invalid-feedback">{errors.phoneOtp}</p>}
+
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "flex-end" }} onClick={handleGenerateOtp}>
+                                <span style={{ fontSize: "12px", color: "#ff5722",cursor:"pointer"}}>Resent OTP</span>
                             </div>
                         </div>
                     )}

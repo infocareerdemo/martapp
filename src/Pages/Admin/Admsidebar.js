@@ -49,7 +49,7 @@ const Admsidebar = () => {
                             Dashboard
                         </MenuItem>
                     </Menu>
-                   
+
                     <Menu iconShape="square" className="ClsMenu">
                         <MenuItem
                             onClick={() => navigate('/AdmMenu')}
@@ -63,7 +63,7 @@ const Admsidebar = () => {
                         <MenuItem
                             onClick={() => navigate('/CategoryList')}
                             icon={<CiGrid42 id="sidebaruser" color="black" />}
-                            className={['/CategoryList','/UpdateCategory','/AddCategoryList'].includes(location.pathname) ? 'active' : ''}
+                            className={['/CategoryList', '/UpdateCategory', '/AddCategoryList'].includes(location.pathname) ? 'active' : ''}
                         >
                             Category
                         </MenuItem>
@@ -87,15 +87,25 @@ const Admsidebar = () => {
                             Report
                         </MenuItem>
                     </Menu>
+                    <Menu iconShape="square" className="ClsMenu">
+                        <MenuItem
+                            onClick={() => navigate('/WalletReport')}
+                            icon={<AiOutlineImport id="sidebaruser" color="red" />}
+                            className={['/WalletReport'].includes(location.pathname) ? 'active' : ''}
+                        >
+                            Wallet Report
+                        </MenuItem>
+                    </Menu>
                 </>
             )}
             {roleId === '3' && (
                 <>
+
                     <Menu iconShape="square" className="ClsMenu">
                         <MenuItem
                             onClick={() => navigate('/UserList')}
                             icon={<HiOutlineUsers id="sidebaruser" color="green" />}
-                            className={['/UserList','/AddUserByAdmin','/UpdateUserByAdmin'].includes(location.pathname) ? 'active' : ''}
+                            className={['/UserList', '/AddUserByAdmin', '/UpdateUserByAdmin'].includes(location.pathname) ? 'active' : ''}
                         >
                             Users
                         </MenuItem>
@@ -109,6 +119,7 @@ const Admsidebar = () => {
                             Manage Wallet Import
                         </MenuItem>
                     </Menu>
+                   
                 </>
             )}
         </Sidebar>
