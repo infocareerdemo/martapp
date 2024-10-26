@@ -119,6 +119,15 @@ const Admsidebar = () => {
                             Manage Wallet Import
                         </MenuItem>
                     </Menu>
+                    <Menu iconShape="square" className="ClsMenu">
+                        <MenuItem
+                            onClick={() => navigate('/WalletReport')}
+                            icon={<AiOutlineImport id="sidebaruser" color="red" />}
+                            className={['/WalletReport'].includes(location.pathname) ? 'active' : ''}
+                        >
+                            Wallet Report
+                        </MenuItem>
+                    </Menu>
                    
                 </>
             )}

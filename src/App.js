@@ -115,7 +115,7 @@ function App() {
                 <Route path='/CategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <CategoryList /> : <AdmLogin />} />
                 <Route path='/AddCategoryList' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <AddCategoryList /> : <AdmLogin />} />
                 <Route path='/UpdateCategory' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <UpdateCategory /> : <AdmLogin />} />
-                <Route path='/WalletReport' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" ? <WalletReport /> : <AdmLogin />} />
+                <Route path='/WalletReport' element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "1" || roleId !== null && roleId !== undefined && roleId !== "" && roleId === "3" ? <WalletReport /> : <AdmLogin />} />
             
 
                 {/* -------------- Company Admin-------------- */}
