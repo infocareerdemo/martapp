@@ -14,29 +14,29 @@ const useWebSocket = () => {
 
     const [role] = useState(localStorage.getItem("roleId"))
     const baseUrl = process.env.REACT_APP_BASE_URL;
-    useEffect(() => {
+    // useEffect(() => {
         
-       const socketUrl = `http://192.168.3.107:7003/ws`;
-        //   const socketUrl = `http://localhost:7080/ws`;
+    //    const socketUrl = `http://192.168.3.107:7003/ws`;
+    //     //   const socketUrl = `http://localhost:7080/ws`;
 
-        const stompClient = new Client({
-            brokerURL: socketUrl,
-            reconnectDelay: 5000,
-            heartbeatIncoming: 4000,
-            heartbeatOutgoing: 4000,
-            onConnect: () => onConnected(stompClient),
-            onStompError: onError,
-        });
+    //     const stompClient = new Client({
+    //         brokerURL: socketUrl,
+    //         reconnectDelay: 5000,
+    //         heartbeatIncoming: 4000,
+    //         heartbeatOutgoing: 4000,
+    //         onConnect: () => onConnected(stompClient),
+    //         onStompError: onError,
+    //     });
 
-        stompClient.activate();
-        stompClientRef.current = stompClient;
+    //     stompClient.activate();
+    //     stompClientRef.current = stompClient;
 
-        return () => {
-            if (stompClientRef.current) {
-                stompClientRef.current.deactivate();
-            }
-        };
-    }, []);
+    //     return () => {
+    //         if (stompClientRef.current) {
+    //             stompClientRef.current.deactivate();
+    //         }
+    //     };
+    // }, []);
 
     const onConnected = (stompClient) => {
         console.log('Connected to server');
