@@ -188,7 +188,7 @@ const Header = ({ onLocationChange, hideLocation, title, backicon }) => {
                 <div className="menu_section">
                   <h3>Welcome {userName}</h3>
                   <ul>
-                  <li>Wallet ₹ {walletAmount}</li>
+                  <li onClick={() => navigate("/WalletHistory")}>Wallet ₹ {walletAmount}</li>
                     <li onClick={() => navigate("/MyAccount")}>My Account</li>
                     <li onClick={() => navigate("/MyOrders")}>Your Orders</li>
                     <li onClick={Logout}>Logout</li>

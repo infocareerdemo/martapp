@@ -47,7 +47,18 @@
   width: 100%;
   align-items: center;
 }
-
+.wallet_maincontent {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
+  display: flex;
+  justify-content: center;
+  padding: 80px 40px 46px 40px;
+  position: relative;
+  /* transition: all .2s ease-in-out; */
+  width: 100%;
+}
 .left-section .logo {
   font-size: 24px;
   margin-bottom: 20px;

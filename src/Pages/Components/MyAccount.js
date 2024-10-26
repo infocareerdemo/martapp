@@ -47,7 +47,7 @@ const MyAccount = () => {
                 title="Kannan Catering Service"
                 hideLocation={true}
             />
-            <form>
+            {/* <form> */}
                 <div className="login-container" style={{marginTop:"10px"}}>
                     <div className='login_maincontent'>
 
@@ -88,7 +88,6 @@ const MyAccount = () => {
                     
                     </div>
                 </div>
-            </form>
         </div>
     )
 }
