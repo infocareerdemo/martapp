@@ -29,7 +29,7 @@ const useRazorpayPayment = () => {
                     order_id: data.razorpayOrderId,
                     handler: async function (response) {
                         console.log("Payment successful: ", response);
-                        const checkStatusUrl = `/payment/checkStatus`;
+                        const checkStatusUrl = `/payment/checkStatus?razorpayAmount=${amountToPay}`;
                         const data1 = {
                             razorPayDetails: {
                                 razorpayOrderId: response.razorpay_order_id
