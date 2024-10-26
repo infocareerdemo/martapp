@@ -50,7 +50,7 @@ const AddUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false)
             })
-            setAlertType("info")
+            setAlertType("error")
             setAlertMsg("Name is required");
             return false;
         }
@@ -59,17 +59,17 @@ const AddUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false)
             })
-            setAlertType("info")
+            setAlertType("error")
             setAlertMsg("Employee Code is required");
             return false;
         }
-        if (phone.trim() === "") {
-            setUserAlert(true)
+        if (!phone || phone.length < 10) {
+            setUserAlert(true);
             setAlertClose(() => () => {
-                setUserAlert(false)
-            })
-            setAlertType("info")
-            setAlertMsg("Mobile Number is required");
+                setUserAlert(false);
+            });
+            setAlertType("error");
+            setAlertMsg("Mobile Number is required and must be at least 10 digits");
             return false;
         }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -79,7 +79,7 @@ const AddUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false);
             });
-            setAlertType("info");
+            setAlertType("error");
             setAlertMsg("Email is required");
             return false;
         }
@@ -88,7 +88,7 @@ const AddUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false);
             });
-            setAlertType("info");
+            setAlertType("error");
             setAlertMsg("Please enter a valid email address");
             return false;
         }
@@ -124,34 +124,6 @@ const AddUserByAdmin = (props) => {
             })
             .catch((error) => {
                 console.log(error, "Error in saveUserDetails");
-    
-                // Check if error response has the expected structure
-                if (error.response) {
-                    const { errorCode, httpStatus, localizedMessage  } = error.response.data;
-    
-                    if (httpStatus === "CONFLICT" && errorCode === 1001) {
-                        setAlertType("error");
-                        setAlertMsg(localizedMessage);
-                        setUserAlert(true);
-                        setAlertClose(() => () => {
-                            setUserAlert(false);
-                        })
-                    } else {
-                        setAlertType("error");
-                        setAlertMsg("An unexpected error occurred");
-                        setUserAlert(true);
-                        setAlertClose(() => () => {
-                            setUserAlert(false);
-                        })
-                    }
-                } else {
-                    setAlertType("error");
-                    setAlertMsg("Error in saveUserDetails");
-                    setUserAlert(true);
-                    setAlertClose(() => () => {
-                        setUserAlert(false);
-                    })
-                }
             });
     };
 

@@ -69,19 +69,20 @@ const UpdateUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false)
             })
-            setAlertType("info")
+            setAlertType("error")
             setAlertMsg("Name is required");
             return false;
         }
-        if (phone.trim() === "") {
-            setUserAlert(true)
+        if (!phone || phone.length < 10) {
+            setUserAlert(true);
             setAlertClose(() => () => {
-                setUserAlert(false)
-            })
-            setAlertType("info")
-            setAlertMsg("Mobile Number is required");
+                setUserAlert(false);
+            });
+            setAlertType("error");
+            setAlertMsg("Mobile Number is required and must be at least 10 digits");
             return false;
         }
+        
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (email.trim() === "") {
@@ -89,7 +90,7 @@ const UpdateUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false);
             });
-            setAlertType("info");
+            setAlertType("error");
             setAlertMsg("Email is required");
             return false;
         }
@@ -98,13 +99,24 @@ const UpdateUserByAdmin = (props) => {
             setAlertClose(() => () => {
                 setUserAlert(false);
             });
-            setAlertType("info");
+            setAlertType("error");
             setAlertMsg("Please enter a valid email address");
             return false;
         }
         return true;
     };
-
+    const validateFieldsWallet = () => {
+        if (wallet.trim() === "") {
+            setUserAlert(true)
+            setAlertClose(() => () => {
+                setUserAlert(false)
+            })
+            setAlertType("error")
+            setAlertMsg("Wallet is required");
+            return false;
+        }
+        return true;
+    };
     const handlesubmit = () => {
         if (!validateFields()) {
             return;
@@ -149,6 +161,9 @@ const UpdateUserByAdmin = (props) => {
             })
     }
     const Otpsent = () => {
+        if (!validateFieldsWallet()) {
+            return;
+        }
         const url = `/companyadmin/verifyCmpnyAdminAndSendOtp`;
         const data = { userId: userid };
         apiServiceCall("GET", url, data, headers)

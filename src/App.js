@@ -51,6 +51,7 @@ import CategoryList from './Pages/Admin/CategoryList';
 import AddCategoryList from './Pages/Admin/AddCategoryList';
 import UpdateCategory from './Pages/Admin/UpdateCategory';
 import WalletReport from './Pages/Admin/WalletReport';
+import WalletHistory from './Pages/Components/WalletHistory';
 
 function App() {
   const { appContextValue } = useAppContext();
@@ -92,6 +93,7 @@ function App() {
                 <Route path="/OrderPlaced" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "2" ? <OrderPlaced /> : <UserLogin />} />
                 <Route path="/MyAccount" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "2" ? <MyAccount /> : <UserLogin />} />
                 <Route path="/OrderHistory" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "2" ? <OrderHistory /> : <UserLogin />} />
+                <Route path="/WalletHistory" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "2" ? <WalletHistory /> : <UserLogin />} />
                 <Route path="/ChangePin" element={roleId !== null && roleId !== undefined && roleId !== "" && roleId === "2" ? <ChangePIN /> : <ChangePIN />} />
 
                 {/* -------------- Admin-------------- */}
