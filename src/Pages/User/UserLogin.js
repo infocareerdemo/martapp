@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppContext } from "../Components/AppProvider";
+import { Modal } from "react-bootstrap";
+import { AiOutlineClose } from "react-icons/ai";
 import Alert from "../Components/Alert";
 import "../../style.css";
 
@@ -30,6 +32,8 @@ const UserLogin = () => {
     const [employeeOtp, setEmployeeOtp] = useState("");
     const [countdown, setCountdown] = useState(180);
     const [errors, setErrors] = useState({});
+
+    const [otpModalOpen, setOtpModalOpen] = useState(false);
 
     useEffect(() => {
         // localStorage.clear();
@@ -185,7 +189,17 @@ const UserLogin = () => {
                             </div>
                         </div>
                     )}
-
+                    <div onClick={() => setOtpModalOpen(true)}>
+                        <span
+                            style={{
+                                fontSize: "12px",
+                                color: "#ff5722",
+                                cursor: "pointer",
+                            }}
+                        >
+                            Terms & Condition
+                        </span>
+                    </div>
                     {/* Submit / Login Button */}
                     <div className="col-12 col-md-4">
                         {!otpflag ? (
@@ -218,6 +232,25 @@ const UserLogin = () => {
                     onConfirm={() => setUserAlert(false)}
                 />
             </div>
+            <Modal
+                dialogClassName="modal-dialog modal-lg"
+                centered
+                show={otpModalOpen}
+            >
+                <Modal.Header>
+                    <div className="modal_subhead xl">
+                        <span className="modal_head_txt">Teams and Condition</span>
+                        <AiOutlineClose onClick={() => setOtpModalOpen(false)}
+                            className="moda_closel_icon"
+                        />
+                    </div>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="modal_body_container">
+                        <div>mani</div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </div>
     );
 };

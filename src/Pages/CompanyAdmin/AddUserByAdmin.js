@@ -102,7 +102,7 @@ const AddUserByAdmin = (props) => {
         const url = `/companyadmin/addNewUser`;
         const data = {
             employeeCode: empcode,
-            userName: name,
+            name: name,
             emailId: email,
             phoneNo: phone,
             role:{

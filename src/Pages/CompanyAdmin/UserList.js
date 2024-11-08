@@ -51,7 +51,7 @@ const UserList = (props) => {
         },
         {
             title: 'Name',
-            field: 'userName'
+            field: 'name'
         },
         {
             title: 'Mobile Number',
@@ -111,7 +111,7 @@ const UserList = (props) => {
                 console.log(response, "Response from saving the item");
                 if (response.status === 200) {
                     setAlertType("info");
-                    setAlertMsg(newStatus ? "Activated" : "Deactivated");
+                    setAlertMsg(newStatus ? "User activated successfully" : "User deactivated successfully");
                     setAlertClose(() => () => {
                         setUserAlert(false);
                     });

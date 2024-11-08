@@ -125,7 +125,7 @@ const UpdateUserByAdmin = (props) => {
         const data = {
             userId: id,
             employeeCode: empcode,
-            userName: name,
+            name: name,
             emailId: email,
             phoneNo: phone
         };
@@ -154,7 +154,7 @@ const UpdateUserByAdmin = (props) => {
             .then((response) => {
                 console.log(response, "get user details")
                 setEmpcode(response.data?.employeeCode || ""); // Use optional chaining and provide a default value
-                setName(response.data?.userName || "");
+                setName(response.data?.name || "");
                 setEmail(response.data?.emailId || "");
                 setPhone(response.data?.phoneNo || "");
                 setWallet(response.data?.walletAmount || "")
@@ -205,12 +205,18 @@ const UpdateUserByAdmin = (props) => {
     };
     const SaveList = () => {
         const url = `/companyadmin/updateWalletToOneUser`;
+        //const url = `/companyadmin/updateWalletToOneUser?futureDate=${"2024-11-07 18:05:00.000"}`;
+        //const futureDate = encodeURIComponent("2024-11-07T18:30");
+        //const url = `/companyadmin/updateWalletToOneUser?futureDate=${futureDate}`;
+        
+
+
         const data = {
             userId:id,
             employeeCode: empcode,
             // userName: name,
             emailId: email,
-            phoneNo: phone,
+            phone: phone,
             walletAmount: wallet
         };
         apiServiceCall("POST", url, data, headers)

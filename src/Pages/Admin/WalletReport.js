@@ -23,7 +23,9 @@ const WalletReport = (props) => {
     const [orderDate, setOrderDate] = useState("");
     const [locationId, setLocationId] = useState("");
 
+    const [currentDate, setselectedCurrentDate] = useState("");
     const [fromDate, setfromDate] = useState("");
+
     const [toDate, settoDate] = useState("");
 
     const [userAlert, setUserAlert] = useState(false);
@@ -86,6 +88,56 @@ const WalletReport = (props) => {
             });
     };
 
+
+    const DownloadUserDetailsReport = () => {
+        // setLoading(true);
+        if (!currentDate) { // Check if orderDate is empty
+            setAlertType("error");
+            setAlertMsg("Please Choose Date");
+            setAlertClose(() => () => {
+                setUserAlert(false);
+            });
+            setUserAlert(true);
+            return;
+        }
+        const axiosConfig = {
+            responseType: 'blob',
+            headers: {
+                'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                Authorization: `Bearer ${token}`
+            }
+        };
+        axios.post(`${baseUrl}/companyadmin/downloadWalletDetailsReport?currentDate=${currentDate}`, null, axiosConfig)
+            .then((response) => {
+                console.log(response, "report")
+                if (!response.data || response.data.size === 0) { // Adjusted check for blob size
+                    setAlertType("error");
+                    setUserAlert(true);
+                    setAlertMsg("Excel file is not available for the date.");
+                    setAlertClose(() => () => {
+                        setUserAlert(false);
+                    });
+                    return;
+                }
+                const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'User_Wallet_Details_Report.xlsx'); // Changed filename to .xlsx
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            })
+            .catch((error) => {
+                console.log('Error fetching Excel file:', error);
+            })
+            .finally(() => {
+                // setLoading(false);
+            });
+    };
+
+
+
     return (
         <div>
             <Header />
@@ -143,6 +195,64 @@ const WalletReport = (props) => {
                             </div>
                         </div>
                     </div>
+
+
+
+
+                    <div className="Summary_card">
+                        <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                                <h4>User Wise Wallet Details Report</h4>
+                            </div>
+                            <div className='row' style={{ marginTop: "5px" }}>
+                            <div className="col-lg-3 col-md-12">
+                    <div className='input_contanier'>
+                        <label className="admaddmenu_label">Date <span className='required' style={{ color: "red" }}>*</span></label>
+                        <input
+                            type="date"
+                            id="currentDate"
+                            name="currentDate"
+                            className='input_box'
+                            value={currentDate}
+                            onChange={(e) => {
+                                const selectedCurrentDate = e.target.value;
+                                setselectedCurrentDate(selectedCurrentDate);
+                                // Automatically update the minimum allowed To Date (1 day after From Date)
+                                //settoDate('');
+                            }}
+                            max={new Date().toISOString().split("T")[0]} // Optional: Prevent selecting future dates
+                        />
+                    </div>
+                </div>
+                {/* <div className="col-lg-3 col-md-12">
+                    <div className='input_contanier'>
+                        <label className="admaddmenu_label">To Date <span className='required' style={{ color: "red" }}>*</span></label>
+                        <input
+                            type="date"
+                            id="toDate"
+                            name="toDate"
+                            className='input_box'
+                            value={toDate}
+                            onChange={(e) => settoDate(e.target.value)}
+                            min={fromDate ? new Date(new Date(fromDate).getTime() + 86400000).toISOString().split("T")[0] : ''} // Set minimum To Date (1 day after From Date)
+                            max={new Date().toISOString().split("T")[0]} // Optional: Prevent selecting future dates
+                        />
+                    </div>
+                </div> */}
+                                <div className="col-lg-3 col-md-12">
+                                    <div className='input_contanier'>
+                                        <label className="admaddmenu_label" style={{ marginBottom: "55px" }}> <span className='required' style={{ color: "red" }} ></span></label>
+
+                                        <button className='input_box' style={{ backgroundColor: "green", color: "white" }} onClick={DownloadUserDetailsReport}>Download Report</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
                 </div>
                 <Alert
                     title={alertTitle}

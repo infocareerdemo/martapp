@@ -198,13 +198,13 @@ const ImportFile = (props) => {
   const SaveList = () => {
     console.log(data, "SaveList data");
     const url = `/companyadmin/addWallet?futureDate=${activeDate}`;
- 
+
     const Importdata = data.map((item) => ({
       employeeCode: item.employeeCode,
       // name: item.name,
       phone: item.phone,
       // email: item.email,
-      walletAmount: item.walletAmount,
+      walletAmount: item.walletAmount
     }));
  
     apiServiceCall("POST", url, Importdata, headers)

@@ -74,7 +74,7 @@ const UploadMultipleUser = (props) => {
               return {
                 id: index + 1,
                 employeeCode: row[headers.indexOf("employeeCode")],
-                userName: row[headers.indexOf("userName")],
+                name: row[headers.indexOf("name")],
                 phone: row[headers.indexOf("phone")],
                 email: row[headers.indexOf("email")],
                 walletAmount: row[headers.indexOf("walletAmount")],
@@ -97,9 +97,12 @@ const UploadMultipleUser = (props) => {
  
     const Importdata = data.map((item) => ({
       employeeCode: item.employeeCode,
-      userName: item.userName,
+      name: item.name,
       phoneNo: item.phone,
       emailId: item.email,
+      role:{
+        roleId : 2 
+    }
       // walletAmount: item.walletAmount,
     }));
  
@@ -234,7 +237,7 @@ const UploadMultipleUser = (props) => {
             columns={[
               { title: "Employee Code", field: "employeeCode" },
               { title: "Phone", field: "phone" },
-              { title: "User Name", field: "userName" },
+              { title: "Name", field: "name" },
               { title: "Email", field: "email" },
               // { title: "Wallet Amount", field: "walletAmount" },
             ]}
